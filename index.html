@@ -1,0 +1,186 @@
+﻿<html>
+<head>
+    <script type="text/javascript" src="dist/vis.js"></script>
+    <link href="dist/vis.css" rel="stylesheet" type="text/css"/>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="toastr.js"></script>
+    <link rel="stylesheet" href="toastr.css"/>
+
+
+    <style type="text/css">
+        #mynetwork {
+            width: 100%;
+            height: 60%;
+            border: 1px solid lightgray;
+
+        }
+
+        #mytimeline {
+            width: 100%;
+            height: 30%;
+            border: 1px solid lightgray;
+
+        }
+
+        .inner-op {
+            padding-left: 50px;
+
+        }
+
+        /*#op_tab {
+            width: 50%;
+            height: 80%;
+            border: 1px solid lightgray;
+            display: table-cell;
+            
+            }*/
+    </style>
+
+
+    <!--ページのタプ化の前準備とページ遷移する前に警告を出す機能の実装-->
+    <script>
+        $(function () {
+            $("#op_tab").tabs();
+        });
+
+        $(window).ready(function () {
+            $(window).on('beforeunload', function () {
+                return '変更が保存されない可能性がありまっす！';
+            });
+        });
+
+
+    </script>
+
+</head>
+<body>
+<div id="mynetwork"></div>
+<div id="mytimeline"></div>
+
+
+<div id="op_tab">
+    <ul>
+        <li><a href="#t_1">プロット編集</a></li>
+        <li><a href="#t_15">ストーリー編集</a></li>
+        <li><a href="#t_2">プロットチェック</a></li>
+        <li><a href="#t_3">ファイル操作</a></li>
+
+    </ul>
+
+
+    <div id="t_1">
+        <form name="node_operation" class="node_operation">
+            <input id="del" type="button" value="ノード削除" onclick="del_click()"/>
+            <!--<input name="edge_add" type="checkbox" />エッジ追加モード-->
+            <p>名前</p>
+            <input id="name" type="text"/>
+            <p>属性</p>
+            <select name="group">
+                <option value="structure" disabled>起承転結</option>
+                <option value="scene">シーン</option>
+                <option value="action">アクション</option>
+            </select>
+            <!--<p>階層</p>
+            <input type="button" name="level_up" onclick="level_up_click()" value="上げる" />
+            <input type="button" name="level_down" onclick="level_down_click()" value="下げる" />-->
+
+
+            <p>内容</p>
+            <textarea id="title" name="content" rows="4" cols="40"></textarea>
+            <br/>
+            <p>設定</p>
+
+
+            <div class="option_block" id="option_block">
+                <div class="form-block" id="form-block">
+                    <p class="op_parent">
+                        <input type="button" value="-" name="option_parent_del"/>設定名<input type="text"
+                                                                                           name="op_parent_name">
+                        カテゴリ:
+                        <select name="context_group">
+                            <option value="person">登場人物</option>
+                            <option value="world">舞台設定</option>
+                            <option value="other">その他</option>
+                        </select>
+                        <input type="button" name="op_add" id="op_add" value="＋"/>
+                    </p>
+                    <p class="inner-op"> 属性名:<input type="text" name="op_name" id="op_name"
+                                                    list="op_name_list"/>設定内容:<input type="text" name="op_content"
+                                                                                     id="op_content"/><input
+                            type="button" name="op_del" id="op_del" value="-"/></p>
+
+                </div>
+
+
+            </div>
+            <input type="button" name="op_parent_add" id="op_parent_add" value="＋"/>
+
+            <br/>
+            <!--<input type="button" name="node_add" onclick="node_add_click()" value="ノード追加" />-->
+            <input type="button" name="node_update" onclick="node_update_click()" value="ノード更新"/>
+
+            <datalist id="op_name_list">
+            </datalist>
+
+        </form>
+    </div>
+
+    <div id="t_15">
+        <!--TODO:ストーリー側の編集フォームを作る。JSでプロット側と完全分離できてないのでどうにかすること-->
+        <form name="story_operation" class="story_operation">
+            <p>名前</p>
+            <input name="name" type="text"/>
+            <p>内容</p>
+            <textarea name="content" rows="4" cols="40"></textarea>
+            <br/>
+            <p>設定</p>
+            <div class="option_block">
+                <div class="form-block">
+                    <p class="op_parent">
+                        <input type="button" value="-" name="option_parent_del"/>設定名<input type="text"
+                                                                                           name="op_parent_name">
+                        カテゴリ:
+                        <select name="context_group">
+                            <option value="person">登場人物</option>
+                            <option value="world">舞台設定</option>
+                            <option value="other">その他</option>
+                        </select>
+                        <input type="button" name="op_add" value="＋"/>
+                    </p>
+                    <p class="inner-op"> 属性名:<input type="text" name="op_name" list="op_name_list"/>設定内容:<input
+                            type="text" name="op_content"/><input type="button" name="op_del"
+                                                                  value="-"/></p>
+                </div>
+            </div>
+            <input type="button" name="op_parent_add" value="＋"/>
+
+            <br/>
+            <!--<input type="button" name="node_add" onclick="node_add_click()" value="ノード追加" />-->
+            <input type="button" id="story_update" name="node_update" value="ストーリーノード更新"/>
+        </form>
+    </div>
+    <div id="t_2">
+        <!--<input type="button" name="plot_check" onclick="plot_check()" value="プロットチェック" /><br />
+        <p>チェックメッセージ</p>
+        <textarea name="check_message" rows="10" cols="40"></textarea>-->
+
+    </div>
+
+    <div id="t_3">
+        <form name="file_operation">
+            <p>ファイル操作関連</p>
+            <input type="file" id="file" name="file"/><br/>
+            <input type="button" name="load" value="読み込み" onclick="file_read()"/><br/>
+            <input type="button" name="store" value="位置保存" onclick="st_pos()"/>
+            <a id="download" target="_blank">ダウンロード</a><br/>
+
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="main.js"></script>
+
+
+</body>
+</html>
