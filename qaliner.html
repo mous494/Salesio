@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question/Answer extraction interface</title>
+
+    <!--jQueryの読み込み-->
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+
+    <!--toastrの読み込み-->
+    <script src="toastr.js"></script>
+    <link rel="stylesheet" href="toastr.css"/>
+
+    <style type="text/css">
+        /*html{*/
+        /*height: 100%;*/
+        /*}*/
+        /*body{*/
+        /*height: 100%;*/
+        /*}*/
+        #QAline_network {
+            /*position: relative;*/
+            width: 98vw;
+            height: 40vh;
+            border: 1px solid lightblue;
+
+        }
+
+        #collection_network {
+            width: 98vw;
+            height: 40vh;
+            border: 1px solid lightcoral;
+            margin: auto;
+        }
+
+        #node-popUp {
+            display: none;
+            position: absolute;
+            top: 350px;
+            left: 170px;
+            z-index: 100;
+            width: 250px;
+            height: 130px;
+            background-color: #f9f9f9;
+            border-style: solid;
+            border-width: 3px;
+            border-color: #5394ed;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #node-expand-menu {
+            display: none;
+            position: absolute;
+            top: 350px;
+            left: 170px;
+            z-index: 100;
+            width: 100px;
+            height: 100px;
+            background-color: #f9f9f9;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #ed0b03;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #modal-background {
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 50;
+            width: 100%;
+            height: 130%;
+            background-color: #000000;
+            opacity: 0.5;
+
+        }
+
+        .initial-dialogue {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            margin: auto;
+            width: 50%;
+            height: 50%;
+            z-index: 100;
+            background-color: white;
+            text-align: center;
+        }
+
+        #initial-idea-input {
+            display: none;
+
+        }
+
+    </style>
+    <script type="text/javascript" src="dist/vis.js"></script>
+    <!--<link href="dist/vis.css" rel="stylesheet" type="text/css"/>-->
+    <!--<script src="dist/vis-network.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="dist/vis-network.min.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"/>
+
+
+<body>
+
+入力したテーマ・メッセージ：<span id="initial-idea-display"></span>
+
+<div id="QAline_network"></div>
+<div id="collection_network"></div>
+
+
+<!--ノード編集の時に出るポップアップ-->
+<div id="node-popUp">
+    <span id="node-operation">node</span> <br>
+    <table style="margin:auto;">
+        <tr>
+            <td>label</td>
+            <td><input title="node-label" id="node-label" value="new value"/></td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>
+                <select title="type" id="node_type">
+                    <option id="Question" class="type_option">Question</option>
+                    <option id="Answer" class="type_option">Answer</option>
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td>category</td>
+            <td>
+                <select title="category" id="node-category">
+                    <option id="when" class="cat-option">When</option>
+                    <option id="where" class="cat-option">Where</option>
+                    <option id="what" class="cat-option">What</option>
+                    <option id="who" class="cat-option">Who</option>
+                    <option id="why" class="cat-option">Why</option>
+                    <option id="how" class="cat-option">How</option>
+                </select>
+
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="save" id="node-saveButton"/>
+    <input type="button" value="cancel" id="node-cancelButton"/>
+</div>
+
+<!--ノード拡張するときのポップアップ-->
+<div id="node-expand-menu">
+    <span id="node-expand-title"><u>ノード拡張</u></span>
+    <table style="margin: auto">
+        <tr>
+            <td id="expand-back">裏</td>
+        </tr>
+        <tr>
+            <td>対偶</td>
+        </tr>
+        <tr>
+            <td id="expand_cancel">キャンセル</td>
+        </tr>
+
+    </table>
+</div>
+
+<!--モーダルダイアログの背景部分-->
+<div id="modal-background"></div>
+<!--ようこそ画面-->
+<div id="initial-menu" class="initial-dialogue">
+    <h1>ようこそ</h1>
+    <button id="new-create">新規作成</button>
+    <button id="load-file">読み込み</button>
+</div>
+
+<!--初期アイデア入れる画面-->
+<div id="initial-idea-input" class="initial-dialogue">
+    <p>作品のテーマ・メッセージを入力しましょう</p>
+    <input type="text" id="initial-idea" title="初期アイデア" style="width: 80%"><br>
+    <button id="initial-decided">OK</button>
+</div>
+
+
+<script type="text/javascript" src="qaliner.js"></script>
+
+
+</body>
+</head></html>

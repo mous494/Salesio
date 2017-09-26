@@ -1,31 +1,64 @@
 ﻿<html>
 <head>
+    <title>Salesio System 2016 knowledge information system Lab.</title>
+    <!--vis.jsの読み込み-->
     <script type="text/javascript" src="dist/vis.js"></script>
-    <link href="dist/vis.css" rel="stylesheet" type="text/css"/>
+    <link href="dist/vis.css" rel="stylesheet"/>
+    <!--jQueryの読み込み-->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <!--toastrの読み込み-->
     <script src="toastr.js"></script>
+    <!--intro.jsの読み込み-->
+    <script src="intro.js"></script>
+    <link rel="stylesheet" href="introjs.css">
+
+
     <link rel="stylesheet" href="toastr.css"/>
 
 
     <style type="text/css">
         #mynetwork {
-            width: 100%;
-            height: 60%;
+            width: 98%;
+            height: 80%;
             border: 1px solid lightgray;
+            margin: auto;
 
         }
 
         #mytimeline {
-            width: 100%;
-            height: 30%;
+            width: 98%;
+            /*height: 30%;*/
             border: 1px solid lightgray;
+            margin: auto;
 
         }
 
         .inner-op {
             padding-left: 50px;
+
+        }
+        .node_focus{
+            float: left;
+            margin-left: 2%;
+        }
+        .copy_paste{
+            float: right;
+            margin-right: 2%;
+
+        }
+
+        .node_interaction_control {
+
+            clear: both;
+            text-align: center;
+
+        }
+
+        #op_tab{
+            width: 98%;
+            margin: auto;
 
         }
 
@@ -56,22 +89,51 @@
 
 </head>
 <body>
-<div id="mynetwork"></div>
-<div id="mytimeline"></div>
+Plot
+<div id="mynetwork" data-intro="ここではプロットが表示されます" data-step="1"></div>
+
+<form class="node_focus">
+    <input type="button" id="focus_story" value="選択アクションが連携するストーリーにフォーカス" disabled="true"data-intro="選択したプロットのアクションが関係するストーリー上のアクションにフォーカスします" data-step="12">
+    <input type="button" id="focus_plot" value="選択ストーリーが対応するアクションにハイライト" disabled='true' data-intro="選択したストーリー上のアクションが関係するプロットのアクションにフォーカスします" data-step="13">
+    <input type="button" id="hi_light_del" value="プロットアクションのハイライト解除"data-intro="アクションのハイライト表示を解除できます" data-step="14">
+</form>
+
+
+<form class="copy_paste">
+    <input type="button" id="copy" value="ノードコピー" data-intro="ノードをクリップボードにコピーします"/>
+    <input type="button" id="paste" value="ノード貼り付け"/>
+
+</form>
+
+<br>
+
+<form class="node_interaction_control" data-intro="ここでは、プロットとストーリーのアクションを関連付けます" data-step="8">
+
+    <input type="button" id="plot_to_story" value="∨" data-intro="プロット側アクションをストーリーに追加します" data-step="9"/>
+    <input type="button" id="story_to_plot" value="∧" data-intro="ストーリー側アクションをプロットのシーンに追加します" data-step="10"/>
+    <input type="button" id="plot_eq_story" value="||" data-intro="すでに存在するアクション同士を関連付けます" data-step="11"/>
+
+</form>
+
+
+Story
+<div id="mytimeline" data-intro="ここにはストーリーが表示されます" data-step="2"></div>
 
 
 <div id="op_tab">
-    <ul>
-        <li><a href="#t_1">プロット編集</a></li>
+    <ul  data-intro="タブメニューで機能のカテゴリを選択します" data-step="3">
+        <li><a id="plot_tab" href="#t_1" >プロット編集</a></li>
         <li><a href="#t_15">ストーリー編集</a></li>
-        <li><a href="#t_2">プロットチェック</a></li>
+        <!--<li><a href="#t_2">プロットチェック</a></li>-->
         <li><a href="#t_3">ファイル操作</a></li>
+        <li><a href="#t_4">FAQ</a> </li>
+        <li><a href="#t_5">ログ閲覧</a> </li>
 
     </ul>
 
 
     <div id="t_1">
-        <form name="node_operation" class="node_operation">
+        <form id="plot_node_op" name="node_operation" class="node_operation" data-intro="プロット編集画面では、プロットの中の要素を編集する事ができます" data-step="4">
             <input id="del" type="button" value="ノード削除" onclick="del_click()"/>
             <!--<input name="edge_add" type="checkbox" />エッジ追加モード-->
             <p>名前</p>
@@ -82,9 +144,6 @@
                 <option value="scene">シーン</option>
                 <option value="action">アクション</option>
             </select>
-            <!--<p>階層</p>
-            <input type="button" name="level_up" onclick="level_up_click()" value="上げる" />
-            <input type="button" name="level_down" onclick="level_down_click()" value="下げる" />-->
 
 
             <p>内容</p>
@@ -118,7 +177,6 @@
             <input type="button" name="op_parent_add" id="op_parent_add" value="＋"/>
 
             <br/>
-            <!--<input type="button" name="node_add" onclick="node_add_click()" value="ノード追加" />-->
             <input type="button" name="node_update" onclick="node_update_click()" value="ノード更新"/>
 
             <datalist id="op_name_list">
@@ -128,8 +186,8 @@
     </div>
 
     <div id="t_15">
-        <!--TODO:ストーリー側の編集フォームを作る。JSでプロット側と完全分離できてないのでどうにかすること-->
-        <form name="story_operation" class="story_operation">
+
+        <form id="story_node_op" name="story_operation" class="story_operation" data-intro="ストーリー編集画面ではストーリー中の要素を編集することができます" data-step="5">
             <p>名前</p>
             <input name="name" type="text"/>
             <p>内容</p>
@@ -161,24 +219,59 @@
             <input type="button" id="story_update" name="node_update" value="ストーリーノード更新"/>
         </form>
     </div>
-    <div id="t_2">
-        <!--<input type="button" name="plot_check" onclick="plot_check()" value="プロットチェック" /><br />
-        <p>チェックメッセージ</p>
-        <textarea name="check_message" rows="10" cols="40"></textarea>-->
+    <!--<div id="t_2">-->
+        <!--<input type="button" id="plot_check" value="プロットチェック" /><br />-->
+        <!--&lt;!&ndash;<p>チェックメッセージ</p>&ndash;&gt;-->
+        <!--&lt;!&ndash;<textarea name="check_message" rows="10" cols="40"></textarea>&ndash;&gt;-->
 
-    </div>
+    <!--</div>-->
 
-    <div id="t_3">
-        <form name="file_operation">
+    <div id="t_3" >
+        <form name="file_operation" id="file_op" data-intro="ファイル操作画面では、作成した物語の保存・読み込みを行う事ができます" data-step="6">
             <p>ファイル操作関連</p>
             <input type="file" id="file" name="file"/><br/>
             <input type="button" name="load" value="読み込み" onclick="file_read()"/><br/>
-            <input type="button" name="store" value="位置保存" onclick="st_pos()"/>
+            <input type="file" id="log_file" name="log_file"/><br/>
+            <input type="button" id="load_log" value="読み込み"/><br/>
+            <input type="button" name="store" value="保存データ生成" onclick="st_pos()"/>
             <a id="download" target="_blank">ダウンロード</a><br/>
+            <input type="button" id="log_dl_button" value="ログデータ生成"><br>
+            <a id="log_download" target="_blank">ログダウンロード</a>
 
         </form>
     </div>
+
+    <div id="t_4" data-intro="チュートリアルの起動や既知の問題に対する対応が可能です" data-step="7">
+        <form id="FAQ">
+            <input type="button" id="tutorial" value="チュートリアル"/>
+            <br/>
+            <input type="button" id="plot_reset" value="プロットが小さすぎて見えなくなった方はこちら"/>
+
+
+        </form>
+
+
+    </div>
+
+    <div id="t_5">
+        <form id="log">
+
+            <input type="button" id="log_previous" value="<">
+            <input type="text" id="step" size="3"/>
+            <span id="log_step">/0</span>
+            <input type="button" id="log_jump" value="JUMP"/>
+            <input type="button" id="log_next" value=">">
+            <span id="current_operation"></span>
+<br>
+
+            <textarea id="log_view" cols="80" rows="40"></textarea>
+            <input type="button" id="log_print" value="全ログ表示"/>
+        </form>
+
+    </div>
 </div>
+<p align="right">Salesio System v1.03E</p>
+<p align="right">2016 Knowledge Information System Lab.</p>
 <script type="text/javascript" src="main.js"></script>
 
 
