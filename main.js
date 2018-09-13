@@ -119,7 +119,7 @@ var default_options = {
      physics: {
          enabled: true,
          maxVelocity: 20,
-         hierarchicalRepulsion: {nodeDistance: 200}
+         hierarchicalRepulsion: {nodeDistance: 300}
      },
     nodes: {
         shape: 'box',

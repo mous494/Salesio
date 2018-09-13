@@ -23,7 +23,7 @@
         #QAline_network {
             /*position: relative;*/
             width: 98vw;
-            height: 40vh;
+            height: 90vh;
             border: 1px solid lightblue;
 
         }
@@ -35,7 +35,7 @@
             margin: auto;
         }
 
-        #node-popUp {
+        #node-popUp,#edge-popup {
             display: none;
             position: absolute;
             top: 350px;
@@ -76,7 +76,7 @@
             width: 100%;
             height: 130%;
             background-color: #000000;
-            opacity: 0.5;
+            opacity: 0.2;
 
         }
 
@@ -99,6 +99,9 @@
             display: none;
 
         }
+        #qa-load-file-dialog{
+            display: none;
+        }
 
     </style>
     <script type="text/javascript" src="dist/vis.js"></script>
@@ -110,10 +113,27 @@
 
 <body>
 
-入力したテーマ・メッセージ：<span id="initial-idea-display"></span>
+Inputted theme：<span id="initial-idea-display"></span>
 
 <div id="QAline_network"></div>
-<div id="collection_network"></div>
+
+
+
+<!--サジェストを出すボタン-->
+<!--<button id="suggest_qa">時系列抽出</button><br/>-->
+
+<button id="suggest_qa">Time sequence extraction</button><br/>
+<br/>
+<!--アイデアノードの数を調べる奴-->
+<button id="idea_node_count">アイデアノード数計測</button><br />
+
+
+
+<!--データ保存系-->
+<button id="qa-store-data-create-button">Generate save data</button>
+<a id="qa-download" target="_blank">Download save data</a><br/>
+<button id="log-data-create-button">Generate log data</button>
+<a id="log-download" target="_blank">Download log data</a><br/>
 
 
 <!--ノード編集の時に出るポップアップ-->
@@ -121,29 +141,22 @@
     <span id="node-operation">node</span> <br>
     <table style="margin:auto;">
         <tr>
-            <td>label</td>
+            <td>Content</td>
             <td><input title="node-label" id="node-label" value="new value"/></td>
         </tr>
         <tr>
-            <td>Type</td>
-            <td>
-                <select title="type" id="node_type">
-                    <option id="Question" class="type_option">Question</option>
-                    <option id="Answer" class="type_option">Answer</option>
-                </select>
-
-            </td>
-        </tr>
-        <tr>
-            <td>category</td>
+            <td>Category</td>
             <td>
                 <select title="category" id="node-category">
-                    <option id="when" class="cat-option">When</option>
-                    <option id="where" class="cat-option">Where</option>
-                    <option id="what" class="cat-option">What</option>
-                    <option id="who" class="cat-option">Who</option>
-                    <option id="why" class="cat-option">Why</option>
-                    <option id="how" class="cat-option">How</option>
+                    <option value="when" class="cat-option">When?</option>
+                    <option value="where" class="cat-option">Where？</option>
+                    <option value="what" class="cat-option">What?</option>
+                    <option value="who" class="cat-option">Who?</option>
+                    <option value="why" class="cat-option">Why?</option>
+                    <option value="how" class="cat-option">How?</option>
+                    <option value="then_what" class="cat-option">Then What?</option>
+                    <option value="not" class="cat-option">If not</option>
+
                 </select>
 
             </td>
@@ -152,6 +165,37 @@
     <input type="button" value="save" id="node-saveButton"/>
     <input type="button" value="cancel" id="node-cancelButton"/>
 </div>
+
+
+<!--エッジ付けるときに出すポップアップ-->
+<div id="edge-popup">
+    <!--<span>どんな要素か選択して下さい</span>-->
+    <span>Please select the type of edge.</span>
+    <table style="margin:auto;">
+
+        <tr>
+            <td>category</td>
+            <td>
+                <select title="category" id="edge-category">
+                    <option value="when" class="cat-option">When?</option>
+                    <option value="where" class="cat-option">Where?</option>
+                    <option value="what" class="cat-option">What?</option>
+                    <option value="who" class="cat-option">Who?</option>
+                    <option value="why" class="cat-option">Why?</option>
+                    <option value="how" class="cat-option">How?</option>
+                    <option value="then_what" class="cat-option">Then What?</option>
+                    <option value="not" class="cat-option">If not</option>
+
+                </select>
+
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="save" id="edge-saveButton"/>
+
+</div>
+
+
 
 <!--ノード拡張するときのポップアップ-->
 <div id="node-expand-menu">
@@ -174,17 +218,34 @@
 <div id="modal-background"></div>
 <!--ようこそ画面-->
 <div id="initial-menu" class="initial-dialogue">
-    <h1>ようこそ</h1>
-    <button id="new-create">新規作成</button>
-    <button id="load-file">読み込み</button>
+    <!--<h1>ようこそ</h1>-->
+    <h1>Welcome</h1>
+    <button id="new-create">Create New</button>
+    <button id="load-file">Load file</button>
 </div>
 
 <!--初期アイデア入れる画面-->
 <div id="initial-idea-input" class="initial-dialogue">
-    <p>作品のテーマ・メッセージを入力しましょう</p>
-    <input type="text" id="initial-idea" title="初期アイデア" style="width: 80%"><br>
+    <!--<p>作品のテーマ・メッセージを入力しましょう</p>-->
+    <p>Please input the theme of the Work.</p>
+    I want to tell that
+    <input type="text" id="initial-idea" title="初期アイデア" style="width: 80%">
+    <!--を伝えたい<br>-->
     <button id="initial-decided">OK</button>
 </div>
+
+
+<!--ファイルの読み込みとか出す奴-->
+<div id="qa-load-file-dialog" class="initial-dialogue">
+    <form id="qa-file_op">
+        <p>読み込み</p>
+        <input type="file" id="qa-load-file" name="file"/><br/>
+        <input type="button" id="qa-load-button" name="load" value="Load"/><br/>
+    </form>
+</div>
+
+
+
 
 
 <script type="text/javascript" src="qaliner.js"></script>
