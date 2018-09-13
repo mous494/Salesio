@@ -1,0 +1,54 @@
+#mynetwork {
+    width: 98%;
+    height: 80%;
+    border: 1px solid lightgray;
+    margin: auto;
+
+}
+
+#mytimeline {
+    width: 98%;
+    /*height: 30%;*/
+    border: 1px solid lightgray;
+    margin: auto;
+
+}
+
+.inner-op {
+    padding-left: 50px;
+
+}
+.node_focus{
+    float: left;
+    margin-left: 2%;
+}
+.copy_paste{
+    float: right;
+    margin-right: 2%;
+
+}
+
+.node_interaction_control {
+
+    clear: both;
+    text-align: center;
+
+}
+
+#op_tab{
+    width: 98%;
+    margin: auto;
+
+}
+
+.slider_wrapper{
+    width: 400px;
+}
+
+/*#op_tab {
+    width: 50%;
+    height: 80%;
+    border: 1px solid lightgray;
+    display: table-cell;
+
+    }*/

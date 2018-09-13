@@ -17,59 +17,8 @@
 
     <link rel="stylesheet" href="toastr.css"/>
 
+    <link rel="stylesheet" href="index.css"/>
 
-    <style type="text/css">
-        #mynetwork {
-            width: 98%;
-            height: 80%;
-            border: 1px solid lightgray;
-            margin: auto;
-
-        }
-
-        #mytimeline {
-            width: 98%;
-            /*height: 30%;*/
-            border: 1px solid lightgray;
-            margin: auto;
-
-        }
-
-        .inner-op {
-            padding-left: 50px;
-
-        }
-        .node_focus{
-            float: left;
-            margin-left: 2%;
-        }
-        .copy_paste{
-            float: right;
-            margin-right: 2%;
-
-        }
-
-        .node_interaction_control {
-
-            clear: both;
-            text-align: center;
-
-        }
-
-        #op_tab{
-            width: 98%;
-            margin: auto;
-
-        }
-
-        /*#op_tab {
-            width: 50%;
-            height: 80%;
-            border: 1px solid lightgray;
-            display: table-cell;
-            
-            }*/
-    </style>
 
 
     <!--ページのタプ化の前準備とページ遷移する前に警告を出す機能の実装-->
@@ -183,6 +132,25 @@ Story
             </datalist>
 
         </form>
+
+        <div class="emotion_externalization_module">
+
+            <p>ここは感情外化モジュールのテスト部分です</p>
+            <canvas id="emotion_externalization_test" width="300" height="300">
+
+            </canvas>
+
+            <div class="slider_wrapper">
+                <div id="slider0"></div>
+                <div id="slider1"></div>
+                <div id="slider2"></div>
+                <div id="slider3"></div>
+            </div>
+            <button id="slider_decide">感情決定！</button>
+
+        </div>
+
+
     </div>
 
     <div id="t_15">

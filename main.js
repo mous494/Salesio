@@ -4,8 +4,9 @@
 
 
 //デバッグ処理用のフラグ
-var DEBUG_FLAG = true;
-var LOG = [];
+let DEBUG_FLAG = true;
+let LOG = [];
+
 
 
 //ページが読み込まれたとき用処理
@@ -65,6 +66,19 @@ $(document).ready(function () {
 
     $('.story_operation').find('#story_update').click(story_node_update);
     $('#log_dl_button').click(log_save);
+
+    //TODO:ここからレーダーチャート関連の実験
+
+    let emotion_canvas = document.getElementById('emotion_externalization_test');
+    context_draw(emotion_canvas);
+
+
+
+
+
+
+
+
 
     toastr.info('Welcome', 'ようこそ');
 });
@@ -1105,4 +1119,58 @@ function log_move(step) {
     $('#current_operation').text(LOG[step].comment);
 
     $('#log_step').text(text);
+}
+
+
+function context_draw(emotion_canvas) {
+    $('#slider0').slider();
+    $('#slider1').slider();
+    $('#slider2').slider();
+    $('#slider3').slider();
+    $('#slider_decide').click( function () {
+        let test_data=[0,0,0,0];
+        test_data[0]=$('#slider0').slider('value')/100;
+        test_data[1]=$('#slider1').slider('value')/100;
+        test_data[2]=$('#slider2').slider('value')/100;
+        test_data[3]=$('#slider3').slider('value')/100;
+
+
+
+        let ctx = emotion_canvas.getContext('2d');
+
+
+        let img = new Image();
+        img.onload = function () {
+            ctx.drawImage(img,0,0,300,300);
+
+            //チャートの描画
+            //let test_data =[0.2,0.4,0.0,0.78];
+            let emotional_center=150;
+            let emotional_fullscale = 100;
+
+            //縦軸の描画
+            ctx.beginPath();
+            ctx.moveTo(150,50);
+            ctx.lineTo(150,250);
+            ctx.stroke();
+
+            //横軸の描画
+            ctx.beginPath();
+            ctx.moveTo(50,150);
+            ctx.lineTo(250,150);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
+            ctx.lineTo(emotional_center+test_data[1]*emotional_fullscale,emotional_center);
+            ctx.lineTo(emotional_center,emotional_center+test_data[2]*emotional_fullscale);
+            ctx.lineTo(emotional_center-test_data[3]*emotional_fullscale,emotional_center);
+            ctx.lineTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
+            ctx.stroke();
+
+        };
+
+        img.src = 'img/emotion/7e52890a.jpg';
+
+    });
 }
