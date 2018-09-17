@@ -45,6 +45,15 @@
     width: 400px;
 }
 
+.emotion_externalization_module{
+    float: left;
+}
+
+.emotion_externalization_canvas{
+    background-image:url("img/emotion/7e52890a.jpg");
+    background-size: contain;
+
+}
 /*#op_tab {
     width: 50%;
     height: 80%;

@@ -8,7 +8,6 @@ let DEBUG_FLAG = true;
 let LOG = [];
 
 
-
 //ページが読み込まれたとき用処理
 $(document).ready(function () {
     $original = $('.inner-op:first').clone();
@@ -33,7 +32,6 @@ $(document).ready(function () {
     $('#log_previous').click(log_previous);
     $('#log_next').click(log_next);
     $('#log_jump').click(log_jump);
-
 
 
     $('#tutorial').click(function () {
@@ -69,15 +67,13 @@ $(document).ready(function () {
 
     //TODO:ここからレーダーチャート関連の実験
 
-    let emotion_canvas = document.getElementById('emotion_externalization_test');
-    context_draw(emotion_canvas);
+    // let emotion_canvas = document.getElementsByClassName('emotion_externalization_canvas')[0];
+    // context_draw(emotion_canvas);
 
-
-
-
-
-
-
+    emotion_module_setting($($('.emotion_externalization_module')[0]));
+    // emotion_module_setting($($('.emotion_externalization_module')[1]));
+    // emotion_module_setting($($('.emotion_externalization_module')[2]));
+    // emotion_module_setting($($('.emotion_externalization_module')[3]));
 
 
     toastr.info('Welcome', 'ようこそ');
@@ -130,11 +126,11 @@ var default_options = {
             sortMethod: 'directed'//or directed
         },
     },
-     physics: {
-         enabled: true,
-         maxVelocity: 20,
-         hierarchicalRepulsion: {nodeDistance: 300}
-     },
+    physics: {
+        enabled: true,
+        maxVelocity: 20,
+        hierarchicalRepulsion: {nodeDistance: 300}
+    },
     nodes: {
         shape: 'box',
     },
@@ -430,8 +426,6 @@ function file_read() {
 }
 
 
-
-
 //ファイル書き出し用関数
 //hack:こっちも将来的にサーバー側保存に対応する
 function st_pos() {
@@ -487,6 +481,7 @@ function node_add_click() {
 
     }
 }
+
 //ノード更新のコールバック
 function node_update_click() {
     var node = plot_network.getSelectedNodes();
@@ -506,17 +501,16 @@ function node_update_click() {
             toastr.warning('起承転結の直下にアクションを持つことはできません');
         }
         //中間ノードのアクションへの変換制限
-        else if(get_children(node[0]).length!=0 && add_content.group=="action"){
+        else if (get_children(node[0]).length != 0 && add_content.group == "action") {
             add_content.group = orig_group;
             toastr.warning('子供があるノードをアクションに変更することはできません');
         }
 
         //アクションから変更した場合に対応を消す
-        if (orig_group == 'action' && add_content.group != 'action'){
+        if (orig_group == 'action' && add_content.group != 'action') {
             add_content.story_id = undefined;
 
         }
-
 
 
         add_content.id = node[0];//idにはもとの値を設定
@@ -532,6 +526,7 @@ function node_update_click() {
     }
 
 }
+
 // //todo:いろいろ考える
 // //レベル操作関係はここに
 // function level_up_click() {
@@ -737,6 +732,7 @@ function op_parent_form_add() {
     });
 
 }
+
 //ネットワークノードの内容をフォームから取ってくる関数。
 function get_network_content_data() {
 
@@ -790,6 +786,7 @@ function story_to_plot() {
 
 
 }
+
 /**
  * プロットのアクションノードをストーリーへ
  */
@@ -822,6 +819,7 @@ function plot_to_story() {
     }
 
 }
+
 /**
  * ストーリーとプロットノードを関連づけ
  */
@@ -882,7 +880,7 @@ function story_focus() {
 
 function plot_focus() {
     //選んでないときの処理
-    if(story_timeline.getSelection().length>0) {
+    if (story_timeline.getSelection().length > 0) {
         var story_node_id = story_timeline.getSelection()[0];
 
         var hit_plot_node_id = data.nodes.getIds({
@@ -937,13 +935,14 @@ var copied_node;
  * プロットのノードをコピーする関数
  */
 function node_copy() {
-    copied_node=data.nodes.get(plot_network.getSelectedNodes()[0]);
+    copied_node = data.nodes.get(plot_network.getSelectedNodes()[0]);
 
     //一応コピー不可も考える？
     toastr.info('ノードをコピーしました');
 
-    log_add(copied_node.label+'ノードをクリップボードにコピー');
+    log_add(copied_node.label + 'ノードをクリップボードにコピー');
 }
+
 /**
  * プロットのノードをペーストする関数
  */
@@ -971,8 +970,6 @@ function paste_node() {
 }
 
 
-
-
 //この辺りから下はGUIから直接呼ばれない内部的なメソッド
 /**
  * エッジを辿って親のIDを返す関数です
@@ -988,6 +985,7 @@ function get_parent(id) {
     });
     return (got_edge[0].from);
 }
+
 /**
  * エッジをたどって子供をとってくる関数
  * @param id {number}親のID
@@ -1046,6 +1044,7 @@ function log_save() {
 
 
 }
+
 //ログファイル読み込み
 function log_read() {
     var file_list = log_file.files;
@@ -1056,7 +1055,7 @@ function log_read() {
     reader.onload = function () {
         var load_data = JSON.parse(reader.result);
         LOG = load_data;
-        var step = '0/'+LOG.length;
+        var step = '0/' + LOG.length;
         $('#log_step').text(step);
 
         toastr.info('ログを読み込みました');
@@ -1064,9 +1063,9 @@ function log_read() {
 }
 
 function log_view() {
-    var text='';
-    for(var a in LOG){
-        text += a +'\t'+ LOG[a].comment+'\n';
+    var text = '';
+    for (var a in LOG) {
+        text += a + '\t' + LOG[a].comment + '\n';
     }
     text += '最終的なプロット全ノード数:' + LOG[LOG.length - 1].nodes.length + '\n全ストーリーノード数:' + LOG[LOG.length - 1].timeline.length;
     $('#log_view').val(text);
@@ -1082,20 +1081,22 @@ function log_next() {
     g_step++;
     log_move(g_step);
 }
+
 function log_jump() {
     g_step = $('#step').val();
     log_move(g_step);
 
 }
 
-var g_step =0;
+var g_step = 0;
+
 function log_move(step) {
-    if(step < 0){
+    if (step < 0) {
         toastr.info('これ以前はないです');
-        g_step=0;
+        g_step = 0;
         step = 0;
     }
-    else if(step >= LOG.length){
+    else if (step >= LOG.length) {
         toastr.info('これ以上はないです');
         g_step = LOG.length - 1;
         step = LOG.length - 1;
@@ -1115,62 +1116,236 @@ function log_move(step) {
     story_timeline = new vis.Timeline(story_container, timeline_items, timeline_options);
     //set_timeline_interaction();
     var text = '/' + (LOG.length - 1);
-    $('#step').val(step+'');
+    $('#step').val(step + '');
     $('#current_operation').text(LOG[step].comment);
 
     $('#log_step').text(text);
 }
 
 
-function context_draw(emotion_canvas) {
-    $('#slider0').slider();
-    $('#slider1').slider();
-    $('#slider2').slider();
-    $('#slider3').slider();
-    $('#slider_decide').click( function () {
-        let test_data=[0,0,0,0];
-        test_data[0]=$('#slider0').slider('value')/100;
-        test_data[1]=$('#slider1').slider('value')/100;
-        test_data[2]=$('#slider2').slider('value')/100;
-        test_data[3]=$('#slider3').slider('value')/100;
+function emotion_module_setting(emotion_module) {
+    let sliders = emotion_module.find('.slider');
+    sliders.slider({
+        slide: function () {
+            let test_data = [0, 0, 0, 0];
+
+            for (let i = 0; i < 2; i++) {
+                test_data[i] = ($(sliders[i]).slider('value') / 50) - 1;
+            }
 
 
+            let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
+            ctx.clearRect(0, 0, 300, 300);
 
-        let ctx = emotion_canvas.getContext('2d');
 
+            let emotional_center = 150;
+            let emotional_fullscale = 150;
 
-        let img = new Image();
-        img.onload = function () {
-            ctx.drawImage(img,0,0,300,300);
-
-            //チャートの描画
-            //let test_data =[0.2,0.4,0.0,0.78];
-            let emotional_center=150;
-            let emotional_fullscale = 100;
+            ctx.strokeStyle = 'rgb(0,0,0)';
+            ctx.fillStyle = 'rgb(0,0,0)';
 
             //縦軸の描画
             ctx.beginPath();
-            ctx.moveTo(150,50);
-            ctx.lineTo(150,250);
+            ctx.moveTo(150, 50);
+            ctx.lineTo(150, 250);
             ctx.stroke();
 
             //横軸の描画
             ctx.beginPath();
-            ctx.moveTo(50,150);
-            ctx.lineTo(250,150);
+            ctx.moveTo(50, 150);
+            ctx.lineTo(250, 150);
             ctx.stroke();
+
+            ctx.globalAlpha = 0.7;
+
+            ctx.strokeStyle = 'rgb(192,80,77)';
+            ctx.fillStyle = 'rgb(192,80,77)';
 
             ctx.beginPath();
-            ctx.moveTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
-            ctx.lineTo(emotional_center+test_data[1]*emotional_fullscale,emotional_center);
-            ctx.lineTo(emotional_center,emotional_center+test_data[2]*emotional_fullscale);
-            ctx.lineTo(emotional_center-test_data[3]*emotional_fullscale,emotional_center);
-            ctx.lineTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
-            ctx.stroke();
+            ctx.moveTo(emotional_center,emotional_center+emotional_fullscale);
+            ctx.lineTo(emotional_center,emotional_center+emotional_fullscale-(test_data[0]*emotional_fullscale));
+            ctx.lineTo(emotional_center+emotional_fullscale-(test_data[1]*emotional_fullscale),emotional_center);
+            ctx.lineTo(emotional_center+emotional_fullscale,emotional_center);
+            ctx.lineTo(emotional_center,emotional_center+emotional_fullscale);
+            ctx.fill();
 
-        };
 
-        img.src = 'img/emotion/7e52890a.jpg';
+        }
+    });
+
+
+    let button = emotion_module.find('.slider_decide');
+    button.click(function () {
+
+        let test_data = [0, 0, 0, 0];
+
+        for (let i = 0; i < 2; i++) {
+            test_data[i] = ($(sliders[i]).slider('value') / 50) - 1;
+        }
+
+
+        let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
+        ctx.clearRect(0, 0, 300, 300);
+
+
+        let emotional_center = 150;
+        let emotional_fullscale = 150;
+
+        ctx.strokeStyle = 'rgb(0,0,0)';
+        ctx.fillStyle = 'rgb(0,0,0)';
+
+        //縦軸の描画
+        ctx.beginPath();
+        ctx.moveTo(150, 50);
+        ctx.lineTo(150, 250);
+        ctx.stroke();
+
+        //横軸の描画
+        ctx.beginPath();
+        ctx.moveTo(50, 150);
+        ctx.lineTo(250, 150);
+        ctx.stroke();
+
+        const keys = Object.keys(emotions);
+        for(let i=0; i<keys.length;i++){
+            let emotion_name = keys[i];
+            let r = emotions[keys[i]].r;
+            let th = emotions[keys[i]].th;
+
+            const coodinate = polar2rectangular(r,th);
+            ctx.textAlign = "center";
+            ctx.fillText(emotion_name,emotional_center+coodinate[0]*50,emotional_center-coodinate[1]*50);
+
+
+        }
+
+
+        ctx.globalAlpha = 0.7;
+
+        ctx.strokeStyle = 'rgb(192,80,77)';
+        ctx.fillStyle = 'rgb(192,80,77)';
+
+        ctx.beginPath();
+
+        ctx.moveTo(emotional_center, emotional_center);
+        ctx.lineTo(emotional_center, emotional_center - test_data[0] * emotional_fullscale);
+        ctx.lineTo(emotional_center + test_data[1] * emotional_fullscale, emotional_center);
+        ctx.lineTo(emotional_center, emotional_center);
+
+        // ctx.moveTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
+        // ctx.lineTo(emotional_center+test_data[1]*emotional_fullscale,emotional_center);
+        // ctx.lineTo(emotional_center,emotional_center+test_data[2]*emotional_fullscale);
+        // ctx.lineTo(emotional_center-test_data[3]*emotional_fullscale,emotional_center);
+        // ctx.lineTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
+        ctx.fill();
 
     });
+
 }
+
+
+const emotions = {
+    "fear": {
+        "th": 0,
+        "r": 2
+    },
+    "trust": {
+        "th": Math.PI/4,
+        "r": 2
+    },
+    "joy": {
+        "th": Math.PI/2,
+        "r": 2
+    },
+    "anticipation": {
+        "th": 3*Math.PI/4,
+        "r": 2
+    },
+    "anger": {
+        "th": Math.PI,
+        "r": 2
+    },
+    "disgust": {
+        "th": 5*Math.PI/4,
+        "r": 2
+    },
+    "sadness": {
+        "th": 3*Math.PI/2,
+        "r": 2
+    },
+    "surprise": {
+        "th": 7*Math.PI/4,
+        "r": 2
+    }
+};
+
+
+function polar2rectangular(r, th) {
+    let coodinate = [0.0,0.0];
+    coodinate[0]=r*Math.cos(th);
+    coodinate[1]=r*Math.sin(th);
+
+    return coodinate;
+}
+
+
+function context_draw(emotion_canvas) {
+    $('.slider').slider();
+    $('#slider_decide').click(function () {
+
+        let test_data = [0, 0, 0, 0];
+        test_data[0] = $('#slider0').slider('value') / 100;
+        test_data[1] = $('#slider1').slider('value') / 100;
+        test_data[2] = $('#slider2').slider('value') / 100;
+        test_data[3] = $('#slider3').slider('value') / 100;
+
+        let ctx = emotion_canvas.getContext('2d');
+        ctx.clearRect(0, 0, emotion_canvas.width, emotion_canvas.height);
+
+
+        let emotional_center = 150;
+        let emotional_fullscale = 150;
+
+        //縦軸の描画
+        ctx.beginPath();
+        ctx.moveTo(150, 50);
+        ctx.lineTo(150, 250);
+        ctx.stroke();
+
+        //横軸の描画
+        ctx.beginPath();
+        ctx.moveTo(50, 150);
+        ctx.lineTo(250, 150);
+        ctx.stroke();
+
+        ctx.globalAlpha = 0.7;
+
+        ctx.strokeStyle = 'rgb(192,80,77)';
+        ctx.fillStyle = 'rgb(192,80,77)';
+
+        ctx.beginPath();
+        ctx.moveTo(emotional_center, emotional_center - test_data[0] * emotional_fullscale);
+        ctx.lineTo(emotional_center + test_data[1] * emotional_fullscale, emotional_center);
+        ctx.lineTo(emotional_center, emotional_center + test_data[2] * emotional_fullscale);
+        ctx.lineTo(emotional_center - test_data[3] * emotional_fullscale, emotional_center);
+        ctx.lineTo(emotional_center, emotional_center - test_data[0] * emotional_fullscale);
+        ctx.fill();
+
+    });
+
+}
+
+// function emotion_background_draw(emotion_background) {
+//     let ctx = emotion_background.getContext('2d');
+//
+//     let img = new Image();
+//     img.onload = function () {
+//         ctx.drawImage(img,0,0,300,300);
+//
+//     };
+//
+//     img.src = 'img/emotion/7e52890a.jpg';
+//
+// }
+//
+//

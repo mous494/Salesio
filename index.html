@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="index.css"/>
 
 
-
     <!--ページのタプ化の前準備とページ遷移する前に警告を出す機能の実装-->
     <script>
         $(function () {
@@ -42,9 +41,11 @@ Plot
 <div id="mynetwork" data-intro="ここではプロットが表示されます" data-step="1"></div>
 
 <form class="node_focus">
-    <input type="button" id="focus_story" value="選択アクションが連携するストーリーにフォーカス" disabled="true"data-intro="選択したプロットのアクションが関係するストーリー上のアクションにフォーカスします" data-step="12">
-    <input type="button" id="focus_plot" value="選択ストーリーが対応するアクションにハイライト" disabled='true' data-intro="選択したストーリー上のアクションが関係するプロットのアクションにフォーカスします" data-step="13">
-    <input type="button" id="hi_light_del" value="プロットアクションのハイライト解除"data-intro="アクションのハイライト表示を解除できます" data-step="14">
+    <input type="button" id="focus_story" value="選択アクションが連携するストーリーにフォーカス" disabled="true"
+           data-intro="選択したプロットのアクションが関係するストーリー上のアクションにフォーカスします" data-step="12">
+    <input type="button" id="focus_plot" value="選択ストーリーが対応するアクションにハイライト" disabled='true'
+           data-intro="選択したストーリー上のアクションが関係するプロットのアクションにフォーカスします" data-step="13">
+    <input type="button" id="hi_light_del" value="プロットアクションのハイライト解除" data-intro="アクションのハイライト表示を解除できます" data-step="14">
 </form>
 
 
@@ -70,19 +71,20 @@ Story
 
 
 <div id="op_tab">
-    <ul  data-intro="タブメニューで機能のカテゴリを選択します" data-step="3">
-        <li><a id="plot_tab" href="#t_1" >プロット編集</a></li>
+    <ul data-intro="タブメニューで機能のカテゴリを選択します" data-step="3">
+        <li><a id="plot_tab" href="#t_1">プロット編集</a></li>
         <li><a href="#t_15">ストーリー編集</a></li>
-        <!--<li><a href="#t_2">プロットチェック</a></li>-->
+        <li><a href="#t_2">感情外化</a></li>
         <li><a href="#t_3">ファイル操作</a></li>
-        <li><a href="#t_4">FAQ</a> </li>
-        <li><a href="#t_5">ログ閲覧</a> </li>
+        <li><a href="#t_4">FAQ</a></li>
+        <li><a href="#t_5">ログ閲覧</a></li>
 
     </ul>
 
 
     <div id="t_1">
-        <form id="plot_node_op" name="node_operation" class="node_operation" data-intro="プロット編集画面では、プロットの中の要素を編集する事ができます" data-step="4">
+        <form id="plot_node_op" name="node_operation" class="node_operation"
+              data-intro="プロット編集画面では、プロットの中の要素を編集する事ができます" data-step="4">
             <input id="del" type="button" value="ノード削除" onclick="del_click()"/>
             <!--<input name="edge_add" type="checkbox" />エッジ追加モード-->
             <p>名前</p>
@@ -133,29 +135,13 @@ Story
 
         </form>
 
-        <div class="emotion_externalization_module">
-
-            <p>ここは感情外化モジュールのテスト部分です</p>
-            <canvas id="emotion_externalization_test" width="300" height="300">
-
-            </canvas>
-
-            <div class="slider_wrapper">
-                <div id="slider0"></div>
-                <div id="slider1"></div>
-                <div id="slider2"></div>
-                <div id="slider3"></div>
-            </div>
-            <button id="slider_decide">感情決定！</button>
-
-        </div>
-
 
     </div>
 
     <div id="t_15">
 
-        <form id="story_node_op" name="story_operation" class="story_operation" data-intro="ストーリー編集画面ではストーリー中の要素を編集することができます" data-step="5">
+        <form id="story_node_op" name="story_operation" class="story_operation"
+              data-intro="ストーリー編集画面ではストーリー中の要素を編集することができます" data-step="5">
             <p>名前</p>
             <input name="name" type="text"/>
             <p>内容</p>
@@ -188,12 +174,97 @@ Story
         </form>
     </div>
     <!--<div id="t_2">-->
-        <!--<input type="button" id="plot_check" value="プロットチェック" /><br />-->
-        <!--&lt;!&ndash;<p>チェックメッセージ</p>&ndash;&gt;-->
-        <!--&lt;!&ndash;<textarea name="check_message" rows="10" cols="40"></textarea>&ndash;&gt;-->
+    <!--<input type="button" id="plot_check" value="プロットチェック" /><br />-->
+    <!--&lt;!&ndash;<p>チェックメッセージ</p>&ndash;&gt;-->
+    <!--&lt;!&ndash;<textarea name="check_message" rows="10" cols="40"></textarea>&ndash;&gt;-->
     <!--</div>-->
 
-    <div id="t_3" >
+    <div id="t_2">
+
+        <div class="emotion_externalization_module">
+            <p>起</p>
+            <div class="emotion_canvases" style="position: relative ">
+                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="slider_wrapper">
+                喜び-悲しみ
+                <div class="slider axis1"></div>
+                怒り-心配
+                <div class="slider axis2"></div>
+                悲しみ(don't care)
+                <div class="slider axis3"></div>
+                怒り(don't care)
+                <div class="slider axis4"></div>
+            </div>
+            <button class="slider_decide">感情決定！</button>
+        </div>
+
+        <div class="emotion_externalization_module">
+            <p>承</p>
+            <div class="emotion_canvases" style="position: relative ">
+                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="slider_wrapper">
+                喜び
+                <div class="slider axis1"></div>
+                心配
+                <div class="slider axis2"></div>
+                悲しみ
+                <div class="slider axis3"></div>
+                怒り
+                <div class="slider axis4"></div>
+            </div>
+            <button class="slider_decide">感情決定！</button>
+        </div>
+        <div class="emotion_externalization_module">
+            <p>転</p>
+            <div class="emotion_canvases" style="position: relative ">
+                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="slider_wrapper">
+                喜び
+                <div class="slider axis1"></div>
+                心配
+                <div class="slider axis2"></div>
+                悲しみ
+                <div class="slider axis3"></div>
+                怒り
+                <div class="slider axis4"></div>
+            </div>
+            <button class="slider_decide">感情決定！</button>
+        </div>
+        <div class="emotion_externalization_module">
+            <p>結</p>
+            <div class="emotion_canvases" style="position: relative ">
+                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+            </div>
+
+            <div class="slider_wrapper">
+                喜び
+                <div class="slider axis1"></div>
+                心配
+                <div class="slider axis2"></div>
+                悲しみ
+                <div class="slider axis3"></div>
+                怒り
+                <div class="slider axis4"></div>
+            </div>
+            <button class="slider_decide">感情決定！</button>
+        </div>
+
+        <div style="clear: both"></div>
+
+
+    </div>
+
+    <div id="t_3">
         <form name="file_operation" id="file_op" data-intro="ファイル操作画面では、作成した物語の保存・読み込みを行う事ができます" data-step="6">
             <p>ファイル操作関連</p>
             <input type="file" id="file" name="file"/><br/>
@@ -229,7 +300,7 @@ Story
             <input type="button" id="log_jump" value="JUMP"/>
             <input type="button" id="log_next" value=">">
             <span id="current_operation"></span>
-<br>
+            <br>
 
             <textarea id="log_view" cols="80" rows="40"></textarea>
             <input type="button" id="log_print" value="全ログ表示"/>
