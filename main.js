@@ -1129,7 +1129,7 @@ function emotion_module_setting(emotion_module) {
         slide: function () {
             let test_data = [0, 0, 0, 0];
 
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 4; i++) {
                 test_data[i] = ($(sliders[i]).slider('value') / 50) - 1;
             }
 
@@ -1140,82 +1140,38 @@ function emotion_module_setting(emotion_module) {
 
             const emotional_center = 150;
             const emotional_fullscale = 150;
+            const axis_length = 150;
             const emotional_offset = 20;
 
             ctx.strokeStyle = 'rgb(0,0,0)';
             ctx.fillStyle = 'rgb(0,0,0)';
 
-            //縦軸の描画
-            ctx.beginPath();
-            ctx.moveTo(150, 50);
-            ctx.lineTo(150, 250);
-            ctx.stroke();
 
-            //横軸の描画
-            ctx.beginPath();
-            ctx.moveTo(50, 150);
-            ctx.lineTo(250, 150);
-            ctx.stroke();
+            // 軸の描画
+            for(let i=0;i<4;i++){
 
-            ctx.globalAlpha = 0.7;
+                ctx.beginPath();
+                ctx.moveTo(emotional_center+polar2rectangular(axis_length,Math.PI*i/4)[0],emotional_center - polar2rectangular(axis_length,Math.PI*i/4)[1]);
+                ctx.lineTo(emotional_center+polar2rectangular(axis_length,Math.PI*(4+i)/4)[0],emotional_center-polar2rectangular(axis_length,Math.PI*(4+i)/4)[1] );
+                ctx.stroke();
 
-            ctx.strokeStyle = 'rgb(192,80,77)';
-            ctx.fillStyle = 'rgb(192,80,77)';
-
-            ctx.beginPath();
-            //喜び軸の開始点と終点の設定
-            if (test_data[0] < 0) {
-                //下側領域
-                ctx.moveTo(emotional_center, emotional_center + emotional_fullscale);
-                ctx.lineTo(emotional_center, emotional_offset + emotional_center + emotional_fullscale + (test_data[0] * emotional_fullscale) - (1 + test_data[0]) * emotional_offset);
-
-            }
-            else {
-                //上側領域
-                ctx.moveTo(emotional_center, emotional_center - emotional_fullscale);
-                ctx.lineTo(emotional_center, -emotional_offset + emotional_center - (emotional_fullscale - (test_data[0] * emotional_fullscale)) + (1 - test_data[0]) * emotional_offset);
 
             }
 
 
-            //横軸開始点（値）と終端（端）の設定
-            if (test_data[1] < 0) {
-                //左側領域
-                ctx.lineTo(-20 + emotional_center - (emotional_fullscale + (test_data[1] * emotional_fullscale)) + (1 + test_data[1]) * emotional_offset, emotional_center);
-                ctx.lineTo(emotional_center - emotional_fullscale, emotional_center);
-            }
-            else {
-                //右側領域
-                ctx.lineTo(20 + emotional_center + (emotional_fullscale - (test_data[1] * emotional_fullscale)) - (1 - test_data[1]) * emotional_offset, emotional_center);
-                ctx.lineTo(emotional_center + emotional_fullscale, emotional_center);
-            }
+            // ctx.globalAlpha = 0.7;
 
+            // ctx.strokeStyle = 'rgb(192,80,77)';
+            // ctx.fillStyle = 'rgb(192,80,77)';
 
-            //終点の設定
-            //円弧で
-            if (test_data[0] > 0 && test_data[1] > 0) {
-
-                ctx.arc(emotional_center, emotional_center, emotional_fullscale, 0, 3*Math.PI / 2, true);
-            }
-            else if (test_data[0] > 0 && test_data[1] <= 0) {
-                ctx.arc(emotional_center, emotional_center, emotional_fullscale, Math.PI, 3*Math.PI / 2, false);
-            }
-            else if (test_data[0] <= 0 && test_data[1] <= 0) {
-                ctx.arc(emotional_center, emotional_center, emotional_fullscale, Math.PI, Math.PI / 2, true);
-            }
-            else if (test_data[0] < 0 && test_data[1] > 0) {
-                ctx.arc(emotional_center, emotional_center, emotional_fullscale, 0, Math.PI / 2, false);
+            //感情点の描画
+            for(let i = 0;i<4;i++){
+                ctx.beginPath();
+                   ctx.circle(emotional_center+polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[0],emotional_center-polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[1],5);
+                ctx.stroke();
             }
 
 
-            // if (test_data[0] < 0) {
-            //     ctx.lineTo(emotional_center, emotional_center + emotional_fullscale);
-            // }
-            // else {
-            //     ctx.lineTo(emotional_center, emotional_center - emotional_fullscale);
-            // }
-
-            ctx.fill();
 
         }
     });
