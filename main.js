@@ -1125,9 +1125,9 @@ function log_move(step) {
 
 function emotion_module_setting(emotion_module) {
     let sliders = emotion_module.find('.slider');
+    let test_data = [0, 0, 0, 0];
     sliders.slider({
         slide: function () {
-            let test_data = [0, 0, 0, 0];
 
             for (let i = 0; i < 4; i++) {
                 test_data[i] = ($(sliders[i]).slider('value') / 50) - 1;
@@ -1149,27 +1149,103 @@ function emotion_module_setting(emotion_module) {
 
             // 軸の描画
             for(let i=0;i<4;i++){
-
                 ctx.beginPath();
                 ctx.moveTo(emotional_center+polar2rectangular(axis_length,Math.PI*i/4)[0],emotional_center - polar2rectangular(axis_length,Math.PI*i/4)[1]);
                 ctx.lineTo(emotional_center+polar2rectangular(axis_length,Math.PI*(4+i)/4)[0],emotional_center-polar2rectangular(axis_length,Math.PI*(4+i)/4)[1] );
                 ctx.stroke();
-
-
             }
 
 
             // ctx.globalAlpha = 0.7;
 
             // ctx.strokeStyle = 'rgb(192,80,77)';
-            // ctx.fillStyle = 'rgb(192,80,77)';
+             ctx.fillStyle = 'rgb(192,80,77)';
 
             //感情点の描画
             for(let i = 0;i<4;i++){
                 ctx.beginPath();
-                   ctx.circle(emotional_center+polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[0],emotional_center-polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[1],5);
+                   ctx.circle(emotional_center+polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[0],emotional_center-polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[1],5);
                 ctx.stroke();
             }
+
+            //感情基準点の描画
+            for(let i = 0;i<4;i++){
+                ctx.beginPath();
+                ctx.circle(emotional_center+polar2rectangular(Math.sign(test_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[0],emotional_center-polar2rectangular(Math.sign(test_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[1],5);
+                ctx.stroke();
+            }
+
+            let dup_data=new Array(8);
+            for (let i = 0; i < 4; i++) {
+                dup_data[i] = test_data[i];
+                dup_data[i+4] = test_data[i];
+            }
+
+
+
+            //filltest
+            let start_number = -1;
+            let canditate_state_number;
+            for (let i = 0; i < 4; i++) {
+                let change_sign = 0;
+                for(let j = i;j < i+3; j++){
+                    if(Math.sign(dup_data[j])!==Math.sign(dup_data[j+1])){
+                        change_sign++;
+                        canditate_state_number=j+1;
+                    }
+                }
+                if(change_sign===0){
+                    start_number=0;
+                    break;
+                }
+                else if(change_sign===1){
+                    start_number=canditate_state_number;
+                    break;
+                }
+                //例外パターン(no1 no4axis関連）
+                if((Math.sign(dup_data[0])===Math.sign(dup_data[3]))&&((Math.sign(dup_data[0])!==Math.sign(dup_data[1])))||(Math.sign(dup_data[0])!==Math.sign(dup_data[2]))){
+                    start_number=-1;
+                    break;
+                }
+
+            }
+
+            if(start_number!==-1) {
+
+                ctx.beginPath();
+                for (let i = start_number; i < start_number + 4; i++) {
+
+                    const current_x = emotional_center + polar2rectangular(dup_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
+                    const current_y = emotional_center - polar2rectangular(dup_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
+
+
+                    if (i === start_number)
+                        ctx.moveTo(current_x, current_y);
+                    else
+                        ctx.lineTo(current_x, current_y);
+
+                }
+
+                for(let i = start_number+3;i>=start_number;i--){
+
+                    ctx.lineTo(emotional_center+polar2rectangular(Math.sign(dup_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-(i%4)/4)[0],emotional_center-polar2rectangular(Math.sign(dup_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-(i%4)/4)[1]);
+
+
+                }
+                ctx.fillStyle = 'rgba(192, 80, 77, 0.7)';
+                ctx.fill();
+
+
+            }
+
+
+
+            //
+            // //領域の描画
+            // for(let i = 0;i<4;i++){
+            // ctx.lineTo(emotional_center+polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[0],emotional_center-polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[1]);
+            // }
+            //
 
 
 
@@ -1180,70 +1256,17 @@ function emotion_module_setting(emotion_module) {
     let button = emotion_module.find('.slider_decide');
     button.click(function () {
 
-        let test_data = [0, 0, 0, 0];
-
-        for (let i = 0; i < 2; i++) {
-            test_data[i] = ($(sliders[i]).slider('value') / 50) - 1;
-        }
-
-
         let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
         ctx.clearRect(0, 0, 300, 300);
 
 
-        let emotional_center = 150;
-        let emotional_fullscale = 150;
-
-        ctx.strokeStyle = 'rgb(0,0,0)';
-        ctx.fillStyle = 'rgb(0,0,0)';
-
-        //縦軸の描画
-        ctx.beginPath();
-        ctx.moveTo(150, 50);
-        ctx.lineTo(150, 250);
-        ctx.stroke();
-
-        //横軸の描画
-        ctx.beginPath();
-        ctx.moveTo(50, 150);
-        ctx.lineTo(250, 150);
-        ctx.stroke();
-
-        // const keys = Object.keys(emotions);
-        // for(let i=0; i<keys.length;i++){
-        //     let emotion_name = keys[i];
-        //     let r = emotions[keys[i]].r;
-        //     let th = emotions[keys[i]].th;
-        //
-        //     const coodinate = polar2rectangular(r,th);
-        //     ctx.textAlign = "center";
-        //     ctx.fillText(emotion_name,emotional_center+coodinate[0]*40,emotional_center-coodinate[1]*40);
-        //
-        //
-        // }
 
 
-        ctx.globalAlpha = 0.7;
 
-        ctx.strokeStyle = 'rgb(192,80,77)';
-        ctx.fillStyle = 'rgb(192,80,77)';
-
-        ctx.beginPath();
-
-        ctx.moveTo(emotional_center, emotional_center);
-        ctx.lineTo(emotional_center, emotional_center - test_data[0] * emotional_fullscale);
-        ctx.lineTo(emotional_center + test_data[1] * emotional_fullscale, emotional_center);
-        ctx.lineTo(emotional_center, emotional_center);
-
-        // ctx.moveTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
-        // ctx.lineTo(emotional_center+test_data[1]*emotional_fullscale,emotional_center);
-        // ctx.lineTo(emotional_center,emotional_center+test_data[2]*emotional_fullscale);
-        // ctx.lineTo(emotional_center-test_data[3]*emotional_fullscale,emotional_center);
-        // ctx.lineTo(emotional_center,emotional_center-test_data[0]*emotional_fullscale);
-        ctx.fill();
 
     });
-    let canvas = emotion_module.find('.emotion_externalization_canvas')[0]
+    let canvas = emotion_module.find('.emotion_externalization_canvas')[0];
+
     canvas.addEventListener('click',function (e) {
         const rect = e.target.getBoundingClientRect();
         const x = e.clientX-rect.left;
