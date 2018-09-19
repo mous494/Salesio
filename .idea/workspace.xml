@@ -4,9 +4,8 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43998bde-3766-4ba7-bb9b-b459e96342fa" name="Default" comment="双対四軸における感情外化に対応した点を描写可能に。">
+    <list default="true" id="43998bde-3766-4ba7-bb9b-b459e96342fa" name="Default" comment="一応fillにも対応した。けど一つの感情が特化すると他が聞かなくなる問題は依然として残ってる。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
     <ignored path="test.iws" />
@@ -37,28 +36,35 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="42" />
-          <entry key="js" value="2647" />
-          <entry key="txt" value="79" />
+          <entry key="js" value="2729" />
+          <entry key="txt" value="148" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="42" />
-          <entry key="JavaScript" value="2647" />
-          <entry key="PLAIN_TEXT" value="79" />
+          <entry key="JavaScript" value="2729" />
+          <entry key="PLAIN_TEXT" value="148" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="jpg" value="1" />
+          <entry key="js" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="1" />
+          <entry key="JavaScript" value="8" />
         </counts>
       </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages" />
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="4" />
+          <entry key="git.branch.create.new" value="1" />
+        </counts>
+      </usages-collector>
       <usages-collector id="statistics.php.composer.actions" />
       <usages-collector id="statistics.spring.boot.run.usages" />
       <usages-collector id="statistics.spring.boot.mvc.usages" />
@@ -77,8 +83,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="1185" column="22" selection-start-line="1185" selection-start-column="22" selection-end-line="1185" selection-end-column="22" />
+            <state relative-caret-position="551">
+              <caret line="1142" column="41" lean-forward="true" selection-start-line="1142" selection-start-column="41" selection-end-line="1142" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -133,7 +139,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="emo_externalization" />
       </map>
     </option>
   </component>
@@ -199,33 +205,7 @@
       <showMembers ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="SalesioViewer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SalesioViewer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SalesioViewer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SalesioViewer" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SalesioViewer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SalesioViewer" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-              <item name="emotion" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -308,6 +288,14 @@
       <item itemvalue="JavaScript Debug.index.html" />
       <item itemvalue="Node.js.main.js" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.main.js" />
+        <item itemvalue="Node.js.main.js" />
+        <item itemvalue="Node.js.main.js" />
+        <item itemvalue="Node.js.main.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="StructureViewFactory">
     <option name="AUTOSCROLL_FROM_SOURCE" value="true" />
@@ -575,7 +563,7 @@
       <workItem from="1537164348411" duration="13308000" />
       <workItem from="1537256471509" duration="7386000" />
       <workItem from="1537336726067" duration="4115000" />
-      <workItem from="1537365655739" duration="307000" />
+      <workItem from="1537365655739" duration="1256000" />
     </task>
     <task id="LOCAL-00001" summary="qa added">
       <created>1506392349282</created>
@@ -619,11 +607,18 @@
       <option name="project" value="LOCAL" />
       <updated>1537273300288</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="一応fillにも対応した。けど一つの感情が特化すると他が聞かなくなる問題は依然として残ってる。">
+      <created>1537366142368</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1537366142368</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="449339000" />
+    <option name="totallyTimeSpent" value="450288000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -636,7 +631,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Capture Tool" order="0" />
       <window_info id="Designer" order="1" />
@@ -719,7 +713,8 @@
     <MESSAGE value="単品のプルチック感情ユニットのプロトタイプを修正。&#10;本当にプロトタイプなのでアレです。" />
     <MESSAGE value="テキストによる感情抽出に対応。" />
     <MESSAGE value="双対四軸における感情外化に対応した点を描写可能に。" />
-    <option name="LAST_COMMIT_MESSAGE" value="双対四軸における感情外化に対応した点を描写可能に。" />
+    <MESSAGE value="一応fillにも対応した。けど一つの感情が特化すると他が聞かなくなる問題は依然として残ってる。" />
+    <option name="LAST_COMMIT_MESSAGE" value="一応fillにも対応した。けど一つの感情が特化すると他が聞かなくなる問題は依然として残ってる。" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -812,8 +807,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="1185" column="22" selection-start-line="1185" selection-start-column="22" selection-end-line="1185" selection-end-column="22" />
+        <state relative-caret-position="551">
+          <caret line="1142" column="41" lean-forward="true" selection-start-line="1142" selection-start-column="41" selection-end-line="1142" selection-end-column="41" />
         </state>
       </provider>
     </entry>

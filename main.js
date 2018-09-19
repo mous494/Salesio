@@ -1127,10 +1127,12 @@ function emotion_module_setting(emotion_module) {
     let sliders = emotion_module.find('.slider');
     let test_data = [0, 0, 0, 0];
     sliders.slider({
-        slide: function () {
+        min:-3,
+        max:3,
+        change: function () {
 
             for (let i = 0; i < 4; i++) {
-                test_data[i] = ($(sliders[i]).slider('value') / 50) - 1;
+                test_data[i] = $(sliders[i]).slider('value')/3;
             }
 
 
@@ -1250,6 +1252,8 @@ function emotion_module_setting(emotion_module) {
 
 
         }
+
+
     });
 
 
