@@ -65,15 +65,22 @@ $(document).ready(function () {
     $('.story_operation').find('#story_update').click(story_node_update);
     $('#log_dl_button').click(log_save);
 
+
+
+    //TODO:ここに物語曲線のインターフェイスの実装
+
+
+
+
     //TODO:ここからレーダーチャート関連の実験
 
     // let emotion_canvas = document.getElementsByClassName('emotion_externalization_canvas')[0];
     // context_draw(emotion_canvas);
 
     emotion_module_setting($($('.emotion_externalization_module')[0]));
-    // emotion_module_setting($($('.emotion_externalization_module')[1]));
-    // emotion_module_setting($($('.emotion_externalization_module')[2]));
-    // emotion_module_setting($($('.emotion_externalization_module')[3]));
+    emotion_module_setting($($('.emotion_externalization_module')[1]));
+    emotion_module_setting($($('.emotion_externalization_module')[2]));
+    emotion_module_setting($($('.emotion_externalization_module')[3]));
 
 
     toastr.info('Welcome', 'ようこそ');
@@ -1145,6 +1152,7 @@ function emotion_module_setting(emotion_module) {
             const axis_length = 150;
             const emotional_offset = 20;
 
+            ctx.lineWidth = 1.0;
             ctx.strokeStyle = 'rgb(0,0,0)';
             ctx.fillStyle = 'rgb(0,0,0)';
 
@@ -1161,7 +1169,7 @@ function emotion_module_setting(emotion_module) {
             // ctx.globalAlpha = 0.7;
 
             // ctx.strokeStyle = 'rgb(192,80,77)';
-             ctx.fillStyle = 'rgb(192,80,77)';
+            //  ctx.fillStyle = 'rgb(192,80,77)';
 
             //感情点の描画
             for(let i = 0;i<4;i++){
@@ -1228,26 +1236,13 @@ function emotion_module_setting(emotion_module) {
 
                 }
 
-                for(let i = start_number+3;i>=start_number;i--){
-
-                    ctx.lineTo(emotional_center+polar2rectangular(Math.sign(dup_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-(i%4)/4)[0],emotional_center-polar2rectangular(Math.sign(dup_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-(i%4)/4)[1]);
-
-
-                }
-                ctx.fillStyle = 'rgba(192, 80, 77, 0.7)';
-                ctx.fill();
+                ctx.lineWidth = 3.0;
+                ctx.strokeStyle = 'rgba(192, 80, 77, 0.7)';
+                ctx.stroke();
 
 
             }
 
-
-
-            //
-            // //領域の描画
-            // for(let i = 0;i<4;i++){
-            // ctx.lineTo(emotional_center+polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[0],emotional_center-polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*i/4)[1]);
-            // }
-            //
 
 
 
@@ -1257,18 +1252,18 @@ function emotion_module_setting(emotion_module) {
     });
 
 
-    let button = emotion_module.find('.slider_decide');
-    button.click(function () {
-
-        let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
-        ctx.clearRect(0, 0, 300, 300);
-
-
-
-
-
-
-    });
+    // let button = emotion_module.find('.slider_decide');
+    // button.click(function () {
+    //
+    //     let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
+    //     ctx.clearRect(0, 0, 300, 300);
+    //
+    //
+    //
+    //
+    //
+    //
+    // });
     let canvas = emotion_module.find('.emotion_externalization_canvas')[0];
 
     canvas.addEventListener('click',function (e) {
@@ -1414,6 +1409,15 @@ function polar2rectangular(r, th) {
     coodinate[1] = r * Math.sin(th);
 
     return coodinate;
+}
+
+function rectangular2polar(x,y){
+    let polar = [0.0, 0.0];
+
+    polar[0] = Math.sqrt(x * x + y * y);
+    polar[1]=y/x;
+
+    return polar;
 }
 
 
