@@ -55,6 +55,13 @@
     background-size: contain;
 
 }
+
+.character_emotion_contents{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
 /*#op_tab {
     width: 50%;
     height: 80%;

@@ -13,6 +13,9 @@
     <!--intro.jsの読み込み-->
     <script src="intro.js"></script>
 
+    <!--グラフのライブラリの読み込み-->
+    <script src="https://unpkg.com/frappe-charts@1.1.0"></script>
+
 
     <link rel="stylesheet" href="introjs.css">
 
@@ -85,6 +88,7 @@ Story
 
 
     <div id="t_1">
+
         <form id="plot_node_op" name="node_operation" class="node_operation"
               data-intro="プロット編集画面では、プロットの中の要素を編集する事ができます" data-step="4">
             <input id="del" type="button" value="ノード削除" onclick="del_click()"/>
@@ -182,13 +186,16 @@ Story
     <!--</div>-->
 
     <div id="t_2">
-        <div id="plot_curve" class="plot_curve">
-
-
-        </div>
-
-
-
+        <p>目指す物語のパターンを選んでください！</p>
+        <select id="curve_select" size="1">
+            <option value="1">1ひたすらハッピー</option>
+            <option value="2">2ひたすらアンハッピー</option>
+            <option value="3">3ハッピー→アンハッピー</option>
+            <option value="4">4アンハッピー→ハッピー</option>
+            <option value="5">5アンハッピー→ハッピー→アンハッピー</option>
+            <option value="6">6ハッピー→アンハッピー→ハッピー</option>
+        </select>
+        <div id="plot_curve" class="plot_curve"></div>
         <div class="emotion_externalization_module introduction">
             <p>起</p>
             <div class="emotion_canvases" style="position: relative ">
@@ -207,6 +214,7 @@ Story
                 <div class="slider axis4"></div>
             </div>
             <!--<button class="slider_decide">感情決定！</button>-->
+            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
         </div>
 
         <div class="emotion_externalization_module">
@@ -217,15 +225,16 @@ Story
             </div>
 
             <div class="slider_wrapper">
-                喜び
+                悲しみ-喜び
                 <div class="slider axis1"></div>
-                心配
+                嫌悪感-信頼
                 <div class="slider axis2"></div>
-                悲しみ
+                怒り-心配
                 <div class="slider axis3"></div>
-                怒り
+                予測-驚き
                 <div class="slider axis4"></div>
             </div>
+            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
             <!--<button class="slider_decide">感情決定！</button>-->
         </div>
         <div class="emotion_externalization_module">
@@ -236,15 +245,16 @@ Story
             </div>
 
             <div class="slider_wrapper">
-                喜び
+                悲しみ-喜び
                 <div class="slider axis1"></div>
-                心配
+                嫌悪感-信頼
                 <div class="slider axis2"></div>
-                悲しみ
+                怒り-心配
                 <div class="slider axis3"></div>
-                怒り
+                予測-驚き
                 <div class="slider axis4"></div>
             </div>
+            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
             <!--<button class="slider_decide">感情決定！</button>-->
         </div>
         <div class="emotion_externalization_module">
@@ -255,15 +265,16 @@ Story
             </div>
 
             <div class="slider_wrapper">
-                喜び
+                悲しみ-喜び
                 <div class="slider axis1"></div>
-                心配
+                嫌悪感-信頼
                 <div class="slider axis2"></div>
-                悲しみ
+                怒り-心配
                 <div class="slider axis3"></div>
-                怒り
+                予測-驚き
                 <div class="slider axis4"></div>
             </div>
+            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
             <!--<button class="slider_decide">感情決定！</button>-->
         </div>
 

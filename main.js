@@ -1,5 +1,6 @@
 ﻿/// <reference path="dist/vis.min.js" />
 /// <reference path="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+/// <reference path="https://unpkg.com/frappe-charts@1.1.0" />
 /// <reference path="toastr.js" />
 
 
@@ -66,13 +67,7 @@ $(document).ready(function () {
     $('#log_dl_button').click(log_save);
 
 
-
-    //TODO:ここに物語曲線のインターフェイスの実装
-
-
-
-
-    //TODO:ここからレーダーチャート関連の実験
+    //TODO:ここから感情外化インターフェースの実験
 
     // let emotion_canvas = document.getElementsByClassName('emotion_externalization_canvas')[0];
     // context_draw(emotion_canvas);
@@ -81,6 +76,94 @@ $(document).ready(function () {
     emotion_module_setting($($('.emotion_externalization_module')[1]));
     emotion_module_setting($($('.emotion_externalization_module')[2]));
     emotion_module_setting($($('.emotion_externalization_module')[3]));
+
+
+    //TODO:ここに物語曲線のインターフェイスの実装
+    //感情曲線のデータ。後で適当な所にうつす
+    const curve_data_array = [
+        {
+            //ひたすらハッピー
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [1, 2, 3, 4]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        },
+        {
+            //ひたすらアンハッピー
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [-10, -20, -30, -40]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        },
+        {
+            //ハッピーアンハッピー
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [20, 10, -10, -20]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        },
+        {
+            //アンハッピー→ハッピー
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [-20, -10, 10, 20]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        },
+        {
+            //アンハッピー→ハッピー→アンハッピー
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [-20, 20, 20, -20]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        },
+        {
+            //ハッピー→アンハッピー→ハッピー
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [20, -10, -10, 20]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        }];
+
+
+    //表示をちゃんとするために小細工
+    $("a[href='#t_2']").click();
+    let plot_curve = new frappe.Chart('#plot_curve', {
+        data: curve_data_array[0],
+        title: "plot_curve",
+        height: 300,
+        type: 'line'
+
+    });
+    // language=JQuery-CSS
+    $('#curve_select').change(function () {
+        let num = $('#curve_select').find('> option:selected').val();
+        plot_curve.update(curve_data_array[num - 1]);
+    });
+    $("a[href='#t_1']").click();
 
 
     toastr.info('Welcome', 'ようこそ');
@@ -1134,12 +1217,12 @@ function emotion_module_setting(emotion_module) {
     let sliders = emotion_module.find('.slider');
     let test_data = [0, 0, 0, 0];
     sliders.slider({
-        min:-3,
-        max:3,
+        min: -3,
+        max: 3,
         change: function () {
 
             for (let i = 0; i < 4; i++) {
-                test_data[i] = $(sliders[i]).slider('value')/3;
+                test_data[i] = $(sliders[i]).slider('value') / 3;
             }
 
 
@@ -1148,9 +1231,9 @@ function emotion_module_setting(emotion_module) {
 
 
             const emotional_center = 150;
-            const emotional_fullscale = 150;
-            const axis_length = 150;
-            const emotional_offset = 20;
+            const emotional_fullscale = 150;//基準点の場所
+            const axis_length = 150;//軸線の長さ
+            const emotional_max = 120;//感情点の長さ
 
             ctx.lineWidth = 1.0;
             ctx.strokeStyle = 'rgb(0,0,0)';
@@ -1158,10 +1241,10 @@ function emotion_module_setting(emotion_module) {
 
 
             // 軸の描画
-            for(let i=0;i<4;i++){
+            for (let i = 0; i < 4; i++) {
                 ctx.beginPath();
-                ctx.moveTo(emotional_center+polar2rectangular(axis_length,Math.PI*i/4)[0],emotional_center - polar2rectangular(axis_length,Math.PI*i/4)[1]);
-                ctx.lineTo(emotional_center+polar2rectangular(axis_length,Math.PI*(4+i)/4)[0],emotional_center-polar2rectangular(axis_length,Math.PI*(4+i)/4)[1] );
+                ctx.moveTo(emotional_center + polar2rectangular(axis_length, Math.PI * i / 4)[0], emotional_center - polar2rectangular(axis_length, Math.PI * i / 4)[1]);
+                ctx.lineTo(emotional_center + polar2rectangular(axis_length, Math.PI * (4 + i) / 4)[0], emotional_center - polar2rectangular(axis_length, Math.PI * (4 + i) / 4)[1]);
                 ctx.stroke();
             }
 
@@ -1171,26 +1254,57 @@ function emotion_module_setting(emotion_module) {
             // ctx.strokeStyle = 'rgb(192,80,77)';
             //  ctx.fillStyle = 'rgb(192,80,77)';
 
-            //感情点の描画
-            for(let i = 0;i<4;i++){
-                ctx.beginPath();
-                   ctx.circle(emotional_center+polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[0],emotional_center-polar2rectangular(test_data[i]*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[1],5);
-                ctx.stroke();
+            // //感情点の描画
+            // for(let i = 0;i<4;i++){
+            //     if(test_data[i]!==0) {
+            //         ctx.beginPath();
+            //
+            //
+            //
+            //         // ctx.circle(emotional_center + polar2rectangular(test_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[0], emotional_center - polar2rectangular(test_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[1], 5);
+            //         ctx.stroke();
+            //     }
+            // }
+
+
+            for (let i = 0; i < 4; i++) {
+                if (test_data[i] !== 0) {
+
+                    let emotional_zero_point_X = emotional_center + polar2rectangular(Math.sign(test_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[0];
+                    let emotional_zero_point_Y = emotional_center - polar2rectangular(Math.sign(test_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[1];
+                    //感情基準点の描画
+                    ctx.beginPath();
+                    ctx.circle(emotional_zero_point_X, emotional_zero_point_Y, 5);
+                    ctx.stroke();
+
+
+                    let emotional_point_from_zero_X;
+                    let emotional_point_from_zero_Y;
+
+                    if (Math.sign(test_data[i]) > 0) {
+                        emotional_point_from_zero_X = polar2rectangular(Math.abs(test_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -i / 4)[0];
+                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(test_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -i / 4)[1];
+                    }
+                    else if (Math.sign(test_data[i] < 0)) {
+                        emotional_point_from_zero_X = polar2rectangular(Math.abs(test_data[i]) * emotional_max, Math.PI / 2 - Math.PI * i / 4)[0];
+                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(test_data[i]) * emotional_max, Math.PI / 2 - Math.PI * i / 4)[1];
+                    }
+
+                    let point_x = emotional_zero_point_X + emotional_point_from_zero_X;
+                    let point_y = emotional_zero_point_Y - emotional_point_from_zero_Y;
+
+                    ctx.beginPath();
+                    ctx.circle(point_x, point_y, 5);
+                    ctx.stroke()
+                }
             }
 
-            //感情基準点の描画
-            for(let i = 0;i<4;i++){
-                ctx.beginPath();
-                ctx.circle(emotional_center+polar2rectangular(Math.sign(test_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[0],emotional_center-polar2rectangular(Math.sign(test_data[i])*emotional_fullscale,Math.PI/2+Math.PI*-i/4)[1],5);
-                ctx.stroke();
-            }
-
-            let dup_data=new Array(8);
+            //判定用のデータ作成
+            let dup_data = new Array(8);
             for (let i = 0; i < 4; i++) {
                 dup_data[i] = test_data[i];
-                dup_data[i+4] = test_data[i];
+                dup_data[i + 4] = test_data[i];
             }
-
 
 
             //filltest
@@ -1198,57 +1312,104 @@ function emotion_module_setting(emotion_module) {
             let canditate_state_number;
             for (let i = 0; i < 4; i++) {
                 let change_sign = 0;
-                for(let j = i;j < i+3; j++){
-                    if(Math.sign(dup_data[j])!==Math.sign(dup_data[j+1])){
+                for (let j = i; j < i + 3; j++) {
+                    if (Math.sign(dup_data[j]) !== Math.sign(dup_data[j + 1])) {
                         change_sign++;
-                        canditate_state_number=j+1;
+                        canditate_state_number = j + 1;
                     }
                 }
-                if(change_sign===0){
-                    start_number=0;
+                if (change_sign === 0) {
+                    start_number = 0;
                     break;
                 }
-                else if(change_sign===1){
-                    start_number=canditate_state_number;
+                else if (change_sign === 1) {
+                    start_number = canditate_state_number;
                     break;
                 }
                 //例外パターン(no1 no4axis関連）
-                if((Math.sign(dup_data[0])===Math.sign(dup_data[3]))&&((Math.sign(dup_data[0])!==Math.sign(dup_data[1])))||(Math.sign(dup_data[0])!==Math.sign(dup_data[2]))){
-                    start_number=-1;
+                if ((Math.sign(dup_data[0]) === Math.sign(dup_data[3])) && ((Math.sign(dup_data[0]) !== Math.sign(dup_data[1]))) || (Math.sign(dup_data[0]) !== Math.sign(dup_data[2]))) {
+                    start_number = -1;
                     break;
                 }
 
             }
 
-            if(start_number!==-1) {
+            if (start_number !== -1) {
 
                 ctx.beginPath();
                 for (let i = start_number; i < start_number + 4; i++) {
 
-                    const current_x = emotional_center + polar2rectangular(dup_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
-                    const current_y = emotional_center - polar2rectangular(dup_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
+                    let emotional_zero_point_X = emotional_center + polar2rectangular(Math.sign(dup_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
+                    let emotional_zero_point_Y = emotional_center - polar2rectangular(Math.sign(dup_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
+
+                    let emotional_point_from_zero_X;
+                    let emotional_point_from_zero_Y;
+
+                    if (Math.sign(dup_data[i]) > 0) {
+                        emotional_point_from_zero_X = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
+                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
+                    }
+                    else if (Math.sign(dup_data[i] < 0)) {
+                        emotional_point_from_zero_X = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, Math.PI / 2 - Math.PI * (i % 4) / 4)[0];
+                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, Math.PI / 2 - Math.PI * (i % 4) / 4)[1];
+                    }
+
+                    let point_x = emotional_zero_point_X + emotional_point_from_zero_X;
+                    let point_y = emotional_zero_point_Y - emotional_point_from_zero_Y;
 
 
                     if (i === start_number)
-                        ctx.moveTo(current_x, current_y);
+                        ctx.moveTo(point_x, point_y);
                     else
-                        ctx.lineTo(current_x, current_y);
+                        ctx.lineTo(point_x, point_y);
 
                 }
 
                 ctx.lineWidth = 3.0;
                 ctx.strokeStyle = 'rgba(192, 80, 77, 0.7)';
                 ctx.stroke();
-
-
             }
 
 
+                //外化可能な感情の抽出
+                const keys = Object.keys(emotions);
+                //感情を回す
+                for (let i = 0; i < keys.length; i++) {
+                    let emotion_name = keys[i];
+                    let r = emotions[keys[i]].r * emotional_max / 3;
+                    let th = emotions[keys[i]].th;
 
+                    const coodinate = polar2rectangular(r, th);
+                    for(let j=0; j<4;j++){
+                        if(Math.abs(test_data[j])===(4-emotions[keys[i]].r)/3){
+                            //値の絶対値で偏角が違う
+                            if (test_data[j]>=0){
+                                // 大きさが一致している
+                                if (emotions[keys[i]].th === j*Math.PI/4){
 
+                                    //plusの時、偏角が一致している
+                                    console.log(emotion_name);
+
+                                }
+                            }
+                            else{
+                                //マイナス側
+                                if (emotions[keys[i]].th === j*Math.PI/4-Math.PI){
+
+                                    //plusの時、偏角が一致している
+                                    console.log(emotion_name);
+
+                                }
+                            }
+                    }
+
+                    // if ((Math.pow((x - (coodinate[0] + 150)), 2) + Math.pow((y - (-coodinate[1] + 150)), 2)) < 250) {
+                    //     console.log(emotion_name);
+                    // }
+                }
+
+            }
         }
-
-
     });
 
 
@@ -1266,17 +1427,17 @@ function emotion_module_setting(emotion_module) {
     // });
     let canvas = emotion_module.find('.emotion_externalization_canvas')[0];
 
-    canvas.addEventListener('click',function (e) {
+    canvas.addEventListener('click', function (e) {
         const rect = e.target.getBoundingClientRect();
-        const x = e.clientX-rect.left;
-        const y= e.clientY-rect.top;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
         const max_emo = 110;
 
         const keys = Object.keys(emotions);
-        for(let i=0; i<keys.length;i++) {
+        for (let i = 0; i < keys.length; i++) {
             let emotion_name = keys[i];
-            let r = emotions[keys[i]].r*max_emo/3;
+            let r = emotions[keys[i]].r * max_emo / 3;
             let th = emotions[keys[i]].th;
 
             const coodinate = polar2rectangular(r, th);
@@ -1285,21 +1446,19 @@ function emotion_module_setting(emotion_module) {
             // console.log(y);
             // console.log(coodinate);
 
-            if((Math.pow((x-(coodinate[0]+150)),2)+Math.pow((y-(-coodinate[1]+150)),2))<250){
+            if ((Math.pow((x - (coodinate[0] + 150)), 2) + Math.pow((y - (-coodinate[1] + 150)), 2)) < 250) {
                 console.log(emotion_name);
             }
         }
 
 
-    },false);
+    }, false);
 
 
 }
-
-
 const emotions = {
     "fear": {
-        "th": 0,
+        "th": 2*Math.PI / 4,
         "r": 2
     },
     "trust": {
@@ -1307,32 +1466,32 @@ const emotions = {
         "r": 2
     },
     "joy": {
-        "th": Math.PI / 2,
+        "th": 0,
         "r": 2
     },
     "anticipation": {
-        "th": 3 * Math.PI / 4,
+        "th":  -Math.PI / 4,
         "r": 2
     },
     "anger": {
-        "th": Math.PI,
+        "th": -Math.PI/2,
         "r": 2
     },
     "disgust": {
-        "th": 5 * Math.PI / 4,
+        "th": -3 * Math.PI / 4,
         "r": 2
     },
     "sadness": {
-        "th": 3 * Math.PI / 2,
+        "th": -Math.PI,
         "r": 2
     },
     "surprise": {
-        "th": 7 * Math.PI / 4,
+        "th": 3 * Math.PI / 4,
         "r": 2
     },
 
     "terror": {
-        "th": 0,
+        "th": 2*Math.PI / 4,
         "r": 1
     },
 
@@ -1341,33 +1500,32 @@ const emotions = {
         "r": 1
     },
     "ecstasy": {
-        "th": Math.PI / 2,
+        "th": 0,
         "r": 1
     },
     "vigilance": {
-        "th": 3 * Math.PI / 4,
+        "th":  -Math.PI / 4,
         "r": 1
     },
     "rage": {
-        "th": Math.PI,
+        "th": -Math.PI/2,
         "r": 1
     },
     "loathing": {
-        "th": 5 * Math.PI / 4,
+        "th": -3 * Math.PI / 4,
         "r": 1
     },
     "grief": {
-        "th": 3 * Math.PI / 2,
+        "th": -Math.PI,
         "r": 1
     },
     "amazement": {
-        "th": 7 * Math.PI / 4,
+        "th": 3 * Math.PI / 4,
         "r": 1
     },
 
-
     "apprehension": {
-        "th": 0,
+        "th": 2*Math.PI / 4,
         "r": 3
     },
 
@@ -1376,31 +1534,136 @@ const emotions = {
         "r": 3
     },
     "serenity": {
-        "th": Math.PI / 2,
+        "th": 0,
         "r": 3
     },
     "interest": {
-        "th": 3 * Math.PI / 4,
+        "th":  -Math.PI / 4,
         "r": 3
     },
     "annoyance": {
-        "th": Math.PI,
+        "th": -Math.PI/2,
         "r": 3
     },
     "boredom": {
-        "th": 5 * Math.PI / 4,
+        "th": -3 * Math.PI / 4,
         "r": 3
     },
     "pensiveness": {
-        "th": 3 * Math.PI / 2,
+        "th": -Math.PI,
         "r": 3
     },
     "distraction": {
-        "th": 7 * Math.PI / 4,
+        "th": 3 * Math.PI / 4,
         "r": 3
     }
 
 };
+
+//
+// const emotions = {
+//     "fear": {
+//         "th": 0,
+//         "r": 2
+//     },
+//     "trust": {
+//         "th": Math.PI / 4,
+//         "r": 2
+//     },
+//     "joy": {
+//         "th": Math.PI / 2,
+//         "r": 2
+//     },
+//     "anticipation": {
+//         "th": 3 * Math.PI / 4,
+//         "r": 2
+//     },
+//     "anger": {
+//         "th": Math.PI,
+//         "r": 2
+//     },
+//     "disgust": {
+//         "th": 5 * Math.PI / 4,
+//         "r": 2
+//     },
+//     "sadness": {
+//         "th": 3 * Math.PI / 2,
+//         "r": 2
+//     },
+//     "surprise": {
+//         "th": 7 * Math.PI / 4,
+//         "r": 2
+//     },
+//
+//     "terror": {
+//         "th": 0,
+//         "r": 1
+//     },
+//
+//     "admiration": {
+//         "th": Math.PI / 4,
+//         "r": 1
+//     },
+//     "ecstasy": {
+//         "th": Math.PI / 2,
+//         "r": 1
+//     },
+//     "vigilance": {
+//         "th": 3 * Math.PI / 4,
+//         "r": 1
+//     },
+//     "rage": {
+//         "th": Math.PI,
+//         "r": 1
+//     },
+//     "loathing": {
+//         "th": 5 * Math.PI / 4,
+//         "r": 1
+//     },
+//     "grief": {
+//         "th": 3 * Math.PI / 2,
+//         "r": 1
+//     },
+//     "amazement": {
+//         "th": 7 * Math.PI / 4,
+//         "r": 1
+//     },
+//
+//     "apprehension": {
+//         "th": 0,
+//         "r": 3
+//     },
+//
+//     "acceptance": {
+//         "th": Math.PI / 4,
+//         "r": 3
+//     },
+//     "serenity": {
+//         "th": Math.PI / 2,
+//         "r": 3
+//     },
+//     "interest": {
+//         "th": 3 * Math.PI / 4,
+//         "r": 3
+//     },
+//     "annoyance": {
+//         "th": Math.PI,
+//         "r": 3
+//     },
+//     "boredom": {
+//         "th": 5 * Math.PI / 4,
+//         "r": 3
+//     },
+//     "pensiveness": {
+//         "th": 3 * Math.PI / 2,
+//         "r": 3
+//     },
+//     "distraction": {
+//         "th": 7 * Math.PI / 4,
+//         "r": 3
+//     }
+//
+// };
 
 
 function polar2rectangular(r, th) {
@@ -1411,11 +1674,11 @@ function polar2rectangular(r, th) {
     return coodinate;
 }
 
-function rectangular2polar(x,y){
+function rectangular2polar(x, y) {
     let polar = [0.0, 0.0];
 
     polar[0] = Math.sqrt(x * x + y * y);
-    polar[1]=y/x;
+    polar[1] = y / x;
 
     return polar;
 }
