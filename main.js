@@ -95,7 +95,7 @@ $(document).ready(function () {
         {
             //ひたすらアンハッピー
             labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-10, -20, -30, -40]}],
+            datasets: [{values: [-1, -2, -3, -4]}],
             yMarkers: [
                 {
                     label: "Zero-line",
@@ -106,7 +106,7 @@ $(document).ready(function () {
         {
             //ハッピーアンハッピー
             labels: ["起", "承", "転", "結"],
-            datasets: [{values: [20, 10, -10, -20]}],
+            datasets: [{values: [2, 1, -1, -2]}],
             yMarkers: [
                 {
                     label: "Zero-line",
@@ -117,7 +117,7 @@ $(document).ready(function () {
         {
             //アンハッピー→ハッピー
             labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-20, -10, 10, 20]}],
+            datasets: [{values: [-2, -1, 1, 2]}],
             yMarkers: [
                 {
                     label: "Zero-line",
@@ -128,7 +128,7 @@ $(document).ready(function () {
         {
             //アンハッピー→ハッピー→アンハッピー
             labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-20, 20, 20, -20]}],
+            datasets: [{values: [-2, 2, 2, -2]}],
             yMarkers: [
                 {
                     label: "Zero-line",
@@ -139,31 +139,92 @@ $(document).ready(function () {
         {
             //ハッピー→アンハッピー→ハッピー
             labels: ["起", "承", "転", "結"],
-            datasets: [{values: [20, -10, -10, 20]}],
+            datasets: [{values: [2, -1, -1, 2]}],
             yMarkers: [
                 {
                     label: "Zero-line",
                     value: 0,
                     options: {labelPos: 'left'} // default: 'right'
                 }]
-        }];
+        },
+        {
+            //ジグザグ1
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [-1, 1, -1, 1]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        },
+        {
+            //ジグザク2
+            labels: ["起", "承", "転", "結"],
+            datasets: [{values: [1, -1, 1, -1]}],
+            yMarkers: [
+                {
+                    label: "Zero-line",
+                    value: 0,
+                    options: {labelPos: 'left'} // default: 'right'
+                }]
+        }
+
+    ];
 
 
     //表示をちゃんとするために小細工
-    $("a[href='#t_2']").click();
-    let plot_curve = new frappe.Chart('#plot_curve', {
-        data: curve_data_array[0],
-        title: "plot_curve",
-        height: 300,
-        type: 'line'
+    // $("a[href='#t_2']").click();
+    // let plot_curve = new frappe.Chart('#plot_curve', {
+    //     data: curve_data_array[0],
+    //     title: "plot_curve",
+    //     height: 300,
+    //     type: 'line'
+    // });
+    // // language=JQuery-CSS
+    // $('#curve_select').change(function () {
+    //     let num = $('#curve_select').find('> option:selected').val();
+    //     plot_curve.update(curve_data_array[num - 1]);
+    // });
+    // $("a[href='#t_1']").click();
+
+    let data_of_chart =[[1, 2, 3, 4],[-1, -2, -3, -4],[2, 1, -1, -2],[-2, -1, 1, 2],[-2, 2, 2, -2],[2, -1, -1, 2],[-1, 1, -1, 1],[1, -1, 1, -1]];
+
+
+
+    let ctx = document.getElementById('chart_demo').getContext('2d');
+    let chartdemo =new Chart(ctx,{
+        type: 'line',
+        data: {
+            labels: ["起", "承", "転", "結"],
+            datasets: [
+                {
+                    label: "感情曲線",
+                    borderColor: 'rgb(255, 0, 0)',
+                    data: data_of_chart[0],
+                },
+            ]
+        },
+        options:{
+            responsive:false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 4,
+                        min: -4,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
 
     });
-    // language=JQuery-CSS
+
     $('#curve_select').change(function () {
-        let num = $('#curve_select').find('> option:selected').val();
-        plot_curve.update(curve_data_array[num - 1]);
-    });
-    $("a[href='#t_1']").click();
+            let num = $('#curve_select').find('> option:selected').val();
+            chartdemo.data.datasets[0].data=data_of_chart[num-1];
+            chartdemo.update();
+        });
 
 
     toastr.info('Welcome', 'ようこそ');

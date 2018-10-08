@@ -14,7 +14,8 @@
     <script src="intro.js"></script>
 
     <!--グラフのライブラリの読み込み-->
-    <script src="https://unpkg.com/frappe-charts@1.1.0"></script>
+    <!--<script src="https://unpkg.com/frappe-charts@1.1.0"></script>&lt;!&ndash;&ndash;&gt;-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
 
     <link rel="stylesheet" href="introjs.css">
@@ -194,13 +195,18 @@ Story
             <option value="4">4アンハッピー→ハッピー</option>
             <option value="5">5アンハッピー→ハッピー→アンハッピー</option>
             <option value="6">6ハッピー→アンハッピー→ハッピー</option>
+            <option value="7">7ジグザク1</option>
+            <option value="8">8ジグザグ2</option>
         </select>
-        <div id="plot_curve" class="plot_curve"></div>
+        <!--<div id="plot_curve" class="plot_curve"></div>-->
+        <div style="height: 300px; position: relative">
+            <canvas id="chart_demo" height="300px"></canvas>
+        </div>
         <div class="emotion_externalization_module introduction">
             <p>起</p>
             <div class="emotion_canvases" style="position: relative ">
                 <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
-                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+                <canvas class="emotion_externalization_canvas" height="300"></canvas>
             </div>
 
             <div class="slider_wrapper">
