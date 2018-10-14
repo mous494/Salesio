@@ -47,6 +47,7 @@
 
 .emotion_externalization_module{
     float: left;
+    margin-bottom: 100px;
 }
 
 .emotion_externalization_canvas{
@@ -61,6 +62,17 @@
     padding: 0px;
     width: 100%;
     box-sizing: border-box;
+}
+
+.character_emotion{
+    position: relative;
+    overflow: hidden;
+    width: 1800px;
+    /*white-space: nowrap;*/
+}
+
+.emotion_word{
+    width: 350px;
 }
 /*#op_tab {
     width: 50%;

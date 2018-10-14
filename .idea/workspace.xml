@@ -4,10 +4,11 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43998bde-3766-4ba7-bb9b-b459e96342fa" name="Default" comment="線で出す事に成功してはいる。感情との対応をどうとるかを考える。&#10;あと、物語パターンを表示する棒グラフを表示したい。">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="43998bde-3766-4ba7-bb9b-b459e96342fa" name="Default" comment="グラフ表示直した。&#10;複合する感情の取得はまだ">
       <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
     </list>
@@ -29,33 +30,35 @@
     <session id="1460462835">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="4" />
-          <entry key="project.open.time.8" value="3" />
+          <entry key="project.open.time.7" value="7" />
+          <entry key="project.open.time.8" value="5" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="381" />
-          <entry key="js" value="5280" />
-          <entry key="txt" value="222" />
+          <entry key="css" value="140" />
+          <entry key="html" value="748" />
+          <entry key="js" value="7217" />
+          <entry key="txt" value="253" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="381" />
-          <entry key="JavaScript" value="5280" />
-          <entry key="PLAIN_TEXT" value="222" />
+          <entry key="CSS" value="140" />
+          <entry key="HTML" value="748" />
+          <entry key="JavaScript" value="7217" />
+          <entry key="PLAIN_TEXT" value="253" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="1" />
           <entry key="html" value="2" />
-          <entry key="jpg" value="1" />
+          <entry key="jpg" value="2" />
           <entry key="js" value="12" />
         </counts>
       </usages-collector>
@@ -63,7 +66,7 @@
         <counts>
           <entry key="CSS" value="1" />
           <entry key="HTML" value="2" />
-          <entry key="Image" value="1" />
+          <entry key="Image" value="2" />
           <entry key="JavaScript" value="12" />
         </counts>
       </usages-collector>
@@ -91,8 +94,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="225" column="31" selection-start-line="225" selection-start-column="31" selection-end-line="225" selection-end-column="31" />
+            <state relative-caret-position="270">
+              <caret line="246" column="31" lean-forward="true" selection-start-line="246" selection-start-column="31" selection-end-line="246" selection-end-column="31" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#46309#46311#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -105,8 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="198" column="36" selection-start-line="198" selection-start-column="36" selection-end-line="198" selection-end-column="36" />
+            <state relative-caret-position="-911">
+              <caret line="208" column="12" selection-start-line="208" selection-start-column="12" selection-end-line="208" selection-end-column="12" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -117,8 +124,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+            <state relative-caret-position="389">
+              <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -150,6 +157,7 @@
       <find>emotional_fullscale</find>
       <find>i</find>
       <find>test_data</find>
+      <find>chara_emotion_clone.clone()</find>
     </findStrings>
     <replaceStrings>
       <replace>edges</replace>
@@ -178,9 +186,9 @@
         <option value="$PROJECT_DIR$/qaliner.html" />
         <option value="$PROJECT_DIR$/qaliner.js" />
         <option value="$PROJECT_DIR$/indes.css" />
-        <option value="$PROJECT_DIR$/index.css" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/index.css" />
         <option value="$PROJECT_DIR$/main.js" />
       </list>
     </option>
@@ -212,10 +220,10 @@
     <servers />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2000" />
+    <option name="x" value="1912" />
     <option name="y" value="-8" />
-    <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -239,7 +247,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -268,8 +276,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -278,7 +286,7 @@
     <property name="SearchEverywhereHistoryKey" value="hieralchal&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538218920199" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539532630124" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/index.html" />
@@ -356,7 +364,7 @@
   </component>
   <component name="StructureViewFactory">
     <option name="AUTOSCROLL_FROM_SOURCE" value="true" />
-    <option name="ACTIVE_ACTIONS" value=",HIDE_INHERITED" />
+    <option name="ACTIVE_ACTIONS" value=",HIDE_INHERITED,SHOW_FIELDS" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -630,7 +638,14 @@
       <workItem from="1538463732431" duration="639000" />
       <workItem from="1538915232988" duration="116000" />
       <workItem from="1538981424844" duration="4190000" />
-      <workItem from="1539009204872" duration="4792000" />
+      <workItem from="1539009204872" duration="4864000" />
+      <workItem from="1539048340563" duration="618000" />
+      <workItem from="1539137277885" duration="62000" />
+      <workItem from="1539228275154" duration="461000" />
+      <workItem from="1539428368903" duration="5119000" />
+      <workItem from="1539440221180" duration="5486000" />
+      <workItem from="1539486554628" duration="4091000" />
+      <workItem from="1539517951228" duration="4513000" />
     </task>
     <task id="LOCAL-00001" summary="qa added">
       <created>1506392349282</created>
@@ -695,11 +710,18 @@
       <option name="project" value="LOCAL" />
       <updated>1538989092503</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="グラフ表示直した。&#10;複合する感情の取得はまだ">
+      <created>1539016773645</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1539016773645</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="479662000" />
+    <option name="totallyTimeSpent" value="500084000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -718,13 +740,13 @@
       <window_info id="Designer" order="1" />
       <window_info id="UI Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="3" weight="0.12260128" />
-      <window_info id="Structure" order="4" weight="0.1663113" />
+      <window_info active="true" id="Structure" order="4" visible="true" weight="0.17110874" />
       <window_info id="Favorites" order="5" side_tool="true" weight="0.32982087" />
       <window_info id="Image Layers" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32809225" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.1029106" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.1029106" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.20041537" />
@@ -798,7 +820,8 @@
     <MESSAGE value="一応fillにも対応した。けど一つの感情が特化すると他が聞かなくなる問題は依然として残ってる。" />
     <MESSAGE value="線で出す事に成功してはいる。感情との対応をどうとるかを考える。&#10;あと、物語パターンを表示する棒グラフを表示したい。" />
     <MESSAGE value="感情の軸上のラベルを取り出せた" />
-    <option name="LAST_COMMIT_MESSAGE" value="感情の軸上のラベルを取り出せた" />
+    <MESSAGE value="グラフ表示直した。&#10;複合する感情の取得はまだ" />
+    <option name="LAST_COMMIT_MESSAGE" value="グラフ表示直した。&#10;複合する感情の取得はまだ" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -867,28 +890,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+        <state relative-caret-position="389">
+          <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/emotion/plutchik.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="198" column="36" selection-start-line="198" selection-start-column="36" selection-end-line="198" selection-end-column="36" />
+        <state relative-caret-position="-911">
+          <caret line="208" column="12" selection-start-line="208" selection-start-column="12" selection-end-line="208" selection-end-column="12" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/img/emotion/plutchik.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="225" column="31" selection-start-line="225" selection-start-column="31" selection-end-line="225" selection-end-column="31" />
+        <state relative-caret-position="270">
+          <caret line="246" column="31" lean-forward="true" selection-start-line="246" selection-start-column="31" selection-end-line="246" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#46309#46311#0" />
+          </folding>
         </state>
       </provider>
     </entry>

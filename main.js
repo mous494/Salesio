@@ -8,6 +8,254 @@
 let DEBUG_FLAG = true;
 let LOG = [];
 
+//グローバルの変数宣言セクション
+
+// //感情曲線のデータ。後で適当な所にうつす
+// const curve_data_array = [
+//     {
+//         //ひたすらハッピー
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [1, 2, 3, 4]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //ひたすらアンハッピー
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [-1, -2, -3, -4]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //ハッピーアンハッピー
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [2, 1, -1, -2]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //アンハッピー→ハッピー
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [-2, -1, 1, 2]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //アンハッピー→ハッピー→アンハッピー
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [-2, 2, 2, -2]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //ハッピー→アンハッピー→ハッピー
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [2, -1, -1, 2]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //ジグザグ1
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [-1, 1, -1, 1]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     },
+//     {
+//         //ジグザク2
+//         labels: ["起", "承", "転", "結"],
+//         datasets: [{values: [1, -1, 1, -1]}],
+//         yMarkers: [
+//             {
+//                 label: "Zero-line",
+//                 value: 0,
+//                 options: {labelPos: 'left'} // default: 'right'
+//             }]
+//     }
+//
+// ];
+
+const data_of_chart = [[1, 2, 3, 4], [-1, -2, -3, -4], [2, 1, -1, -2], [-2, -1, 1, 2], [-2, 2, 2, -2], [2, -1, -1, 2], [-1, 1, -1, 1], [1, -1, 1, -1]];
+
+const emotions = {
+    "fear": {
+        "th": 2 * Math.PI / 4,
+        "r": 2,
+        "overt_behavior": "escape",
+        "jp_name": "恐れ"
+    },
+    "trust": {
+        "th": Math.PI / 4,
+        "r": 2,
+        "overt_behavior": "groom",
+        "jp_name": "信頼"
+    },
+    "joy": {
+        "th": 0,
+        "r": 2,
+        "overt_behavior": "Retain or repeat",
+        "jp_name": "喜び"
+    },
+    "anticipation": {
+        "th": -Math.PI / 4,
+        "r": 2,
+        "overt_behavior": "map",
+        "jp_name": "期待"
+    },
+    "anger": {
+        "th": -Math.PI / 2,
+        "r": 2,
+        "overt_behavior": "attack",
+        "jp_name": "怒り"
+    },
+    "disgust": {
+        "th": -3 * Math.PI / 4,
+        "r": 2,
+        "overt_behavior": "vomit",
+        "jp_name": "嫌悪"
+    },
+    "sadness": {
+        "th": -Math.PI,
+        "r": 2,
+        "overt_behavior": "cry",
+        "jp_name": "悲しみ"
+    },
+    "surprise": {
+        "th": 3 * Math.PI / 4,
+        "r": 2,
+        "overt_behavior": "stop",
+        "jp_name": "驚き"
+    },
+
+    "terror": {
+        "th": 2 * Math.PI / 4,
+        "r": 1,
+        "jp_name": "恐怖"
+    },
+
+    "admiration": {
+        "th": Math.PI / 4,
+        "r": 1,
+        "jp_name": "賞賛"
+    },
+    "ecstasy": {
+        "th": 0,
+        "r": 1,
+        "jp_name": "恍惚"
+    },
+    "vigilance": {
+        "th": -Math.PI / 4,
+        "r": 1,
+        "jp_name": "警戒"
+    },
+    "rage": {
+        "th": -Math.PI / 2,
+        "r": 1,
+        "jp_name": "激怒"
+    },
+    "loathing": {
+        "th": -3 * Math.PI / 4,
+        "r": 1,
+        "jp_name": "強い嫌悪"
+    },
+    "grief": {
+        "th": -Math.PI,
+        "r": 1,
+        "jp_name": "悲嘆"
+    },
+    "amazement": {
+        "th": 3 * Math.PI / 4,
+        "r": 1,
+        "jp_name": "驚嘆"
+    },
+
+    "apprehension": {
+        "th": 2 * Math.PI / 4,
+        "r": 3,
+        "jp_name": "不安"
+    },
+
+    "acceptance": {
+        "th": Math.PI / 4,
+        "r": 3,
+        "jp_name": "容認"
+    },
+    "serenity": {
+        "th": 0,
+        "r": 3,
+        "jp_name": "平穏"
+    },
+    "interest": {
+        "th": -Math.PI / 4,
+        "r": 3,
+        "jp_name": "感心"
+    },
+    "annoyance": {
+        "th": -Math.PI / 2,
+        "r": 3,
+        "jp_name": "苛立ち"
+    },
+    "boredom": {
+        "th": -3 * Math.PI / 4,
+        "r": 3,
+        "jp_name": "うんざり"
+    },
+    "pensiveness": {
+        "th": -Math.PI,
+        "r": 3,
+        "jp_name": "哀愁"
+    },
+    "distraction": {
+        "th": 3 * Math.PI / 4,
+        "r": 3,
+        "jp_name": "放心"
+    }
+
+};
+
+
+class grobal_emotion {
+    constructor() {
+        this.reader_curve = {};
+        this.emotions = [{name: '', emotion: [0, 0, 0, 0]}];
+    }
+}
+
+
+let chara_emotion_clone;
+let emotion_data = new grobal_emotion();
+
+let $original;
+let $op_parent_ogirinal;
+
 
 //ページが読み込まれたとき用処理
 $(document).ready(function () {
@@ -72,128 +320,23 @@ $(document).ready(function () {
     // let emotion_canvas = document.getElementsByClassName('emotion_externalization_canvas')[0];
     // context_draw(emotion_canvas);
 
+
     emotion_module_setting($($('.emotion_externalization_module')[0]));
     emotion_module_setting($($('.emotion_externalization_module')[1]));
     emotion_module_setting($($('.emotion_externalization_module')[2]));
     emotion_module_setting($($('.emotion_externalization_module')[3]));
 
 
+    chara_emotion_clone = $('.character_emotion').clone();
+    set_chara_add_button();
+    set_emotion_save_button();
+
+
     //TODO:ここに物語曲線のインターフェイスの実装
-    //感情曲線のデータ。後で適当な所にうつす
-    const curve_data_array = [
-        {
-            //ひたすらハッピー
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [1, 2, 3, 4]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //ひたすらアンハッピー
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-1, -2, -3, -4]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //ハッピーアンハッピー
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [2, 1, -1, -2]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //アンハッピー→ハッピー
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-2, -1, 1, 2]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //アンハッピー→ハッピー→アンハッピー
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-2, 2, 2, -2]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //ハッピー→アンハッピー→ハッピー
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [2, -1, -1, 2]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //ジグザグ1
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [-1, 1, -1, 1]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        },
-        {
-            //ジグザク2
-            labels: ["起", "承", "転", "結"],
-            datasets: [{values: [1, -1, 1, -1]}],
-            yMarkers: [
-                {
-                    label: "Zero-line",
-                    value: 0,
-                    options: {labelPos: 'left'} // default: 'right'
-                }]
-        }
-
-    ];
-
-
-    //表示をちゃんとするために小細工
-    // $("a[href='#t_2']").click();
-    // let plot_curve = new frappe.Chart('#plot_curve', {
-    //     data: curve_data_array[0],
-    //     title: "plot_curve",
-    //     height: 300,
-    //     type: 'line'
-    // });
-    // // language=JQuery-CSS
-    // $('#curve_select').change(function () {
-    //     let num = $('#curve_select').find('> option:selected').val();
-    //     plot_curve.update(curve_data_array[num - 1]);
-    // });
-    // $("a[href='#t_1']").click();
-
-    let data_of_chart =[[1, 2, 3, 4],[-1, -2, -3, -4],[2, 1, -1, -2],[-2, -1, 1, 2],[-2, 2, 2, -2],[2, -1, -1, 2],[-1, 1, -1, 1],[1, -1, 1, -1]];
-
 
 
     let ctx = document.getElementById('chart_demo').getContext('2d');
-    let chartdemo =new Chart(ctx,{
+    let chartdemo = new Chart(ctx, {
         type: 'line',
         data: {
             labels: ["起", "承", "転", "結"],
@@ -205,8 +348,8 @@ $(document).ready(function () {
                 },
             ]
         },
-        options:{
-            responsive:false,
+        options: {
+            responsive: false,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -221,10 +364,11 @@ $(document).ready(function () {
     });
 
     $('#curve_select').change(function () {
-            let num = $('#curve_select').find('> option:selected').val();
-            chartdemo.data.datasets[0].data=data_of_chart[num-1];
-            chartdemo.update();
-        });
+        let num = $('#curve_select').find('> option:selected').val();
+        chartdemo.data.datasets[0].data = data_of_chart[num - 1];
+        //TODO:軸の数字無くてもいいかも
+        chartdemo.update();
+    });
 
 
     toastr.info('Welcome', 'ようこそ');
@@ -1280,7 +1424,7 @@ function emotion_module_setting(emotion_module) {
     sliders.slider({
         min: -3,
         max: 3,
-        change: function () {
+        change: function (event, ui) {
 
             for (let i = 0; i < 4; i++) {
                 test_data[i] = $(sliders[i]).slider('value') / 3;
@@ -1395,6 +1539,9 @@ function emotion_module_setting(emotion_module) {
 
             }
 
+            //表示用変数
+            let emotion_words = '表現可能な感情：';
+
             if (start_number !== -1) {
 
                 ctx.beginPath();
@@ -1429,11 +1576,11 @@ function emotion_module_setting(emotion_module) {
                 ctx.lineWidth = 3.0;
                 ctx.strokeStyle = 'rgba(192, 80, 77, 0.7)';
                 ctx.stroke();
-            }
 
 
                 //外化可能な感情の抽出
                 const keys = Object.keys(emotions);
+
                 //感情を回す
                 for (let i = 0; i < keys.length; i++) {
                     let emotion_name = keys[i];
@@ -1441,51 +1588,49 @@ function emotion_module_setting(emotion_module) {
                     let th = emotions[keys[i]].th;
 
                     const coodinate = polar2rectangular(r, th);
-                    for(let j=0; j<4;j++){
-                        if(Math.abs(test_data[j])===(4-emotions[keys[i]].r)/3){
+                    let sum_emotion=0;
+                    for (let j = 0; j < 4; j++) {
+                        if (Math.abs(test_data[j]) === (4 - emotions[keys[i]].r) / 3) {
                             //値の絶対値で偏角が違う
-                            if (test_data[j]>=0){
+                            if (test_data[j] >= 0) {
                                 // 大きさが一致している
-                                if (emotions[keys[i]].th === j*Math.PI/4){
-
+                                if (emotions[keys[i]].th === j * Math.PI / 4) {
                                     //plusの時、偏角が一致している
+                                    emotion_words += emotion_name + '（' + emotions[keys[i]].jp_name + '）';
                                     console.log(emotion_name);
-
                                 }
                             }
-                            else{
+                            else {
                                 //マイナス側
-                                if (emotions[keys[i]].th === j*Math.PI/4-Math.PI){
-
+                                if (emotions[keys[i]].th === j * Math.PI / 4 - Math.PI) {
                                     //plusの時、偏角が一致している
+                                    emotion_words += emotion_name + '（' + emotions[keys[i]].jp_name + '）';
                                     console.log(emotion_name);
 
                                 }
                             }
-                    }
+                        }
+                        sum_emotion += test_data[j];
 
-                    // if ((Math.pow((x - (coodinate[0] + 150)), 2) + Math.pow((y - (-coodinate[1] + 150)), 2)) < 250) {
-                    //     console.log(emotion_name);
-                    // }
+                    }
+                    if(sum_emotion >= 4)
+                        emotion_words = "実現可能な感情：conflict（葛藤）"
+
                 }
+            }
+            else {
+                emotion_words = '実現が難しい感情状態です';
 
             }
+
+            //感情ワードの表示
+            let emotion_text_area = $(ui.handle).parents('.slider_wrapper').find('.emotion_word');
+            emotion_text_area.empty();
+            emotion_text_area.append(emotion_words);
         }
     });
 
 
-    // let button = emotion_module.find('.slider_decide');
-    // button.click(function () {
-    //
-    //     let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
-    //     ctx.clearRect(0, 0, 300, 300);
-    //
-    //
-    //
-    //
-    //
-    //
-    // });
     let canvas = emotion_module.find('.emotion_externalization_canvas')[0];
 
     canvas.addEventListener('click', function (e) {
@@ -1517,109 +1662,7 @@ function emotion_module_setting(emotion_module) {
 
 
 }
-const emotions = {
-    "fear": {
-        "th": 2*Math.PI / 4,
-        "r": 2
-    },
-    "trust": {
-        "th": Math.PI / 4,
-        "r": 2
-    },
-    "joy": {
-        "th": 0,
-        "r": 2
-    },
-    "anticipation": {
-        "th":  -Math.PI / 4,
-        "r": 2
-    },
-    "anger": {
-        "th": -Math.PI/2,
-        "r": 2
-    },
-    "disgust": {
-        "th": -3 * Math.PI / 4,
-        "r": 2
-    },
-    "sadness": {
-        "th": -Math.PI,
-        "r": 2
-    },
-    "surprise": {
-        "th": 3 * Math.PI / 4,
-        "r": 2
-    },
 
-    "terror": {
-        "th": 2*Math.PI / 4,
-        "r": 1
-    },
-
-    "admiration": {
-        "th": Math.PI / 4,
-        "r": 1
-    },
-    "ecstasy": {
-        "th": 0,
-        "r": 1
-    },
-    "vigilance": {
-        "th":  -Math.PI / 4,
-        "r": 1
-    },
-    "rage": {
-        "th": -Math.PI/2,
-        "r": 1
-    },
-    "loathing": {
-        "th": -3 * Math.PI / 4,
-        "r": 1
-    },
-    "grief": {
-        "th": -Math.PI,
-        "r": 1
-    },
-    "amazement": {
-        "th": 3 * Math.PI / 4,
-        "r": 1
-    },
-
-    "apprehension": {
-        "th": 2*Math.PI / 4,
-        "r": 3
-    },
-
-    "acceptance": {
-        "th": Math.PI / 4,
-        "r": 3
-    },
-    "serenity": {
-        "th": 0,
-        "r": 3
-    },
-    "interest": {
-        "th":  -Math.PI / 4,
-        "r": 3
-    },
-    "annoyance": {
-        "th": -Math.PI/2,
-        "r": 3
-    },
-    "boredom": {
-        "th": -3 * Math.PI / 4,
-        "r": 3
-    },
-    "pensiveness": {
-        "th": -Math.PI,
-        "r": 3
-    },
-    "distraction": {
-        "th": 3 * Math.PI / 4,
-        "r": 3
-    }
-
-};
 
 //
 // const emotions = {
@@ -1726,7 +1769,12 @@ const emotions = {
 //
 // };
 
-
+/**
+ * 極座標を直交座標に変換
+ * @param r
+ * @param th
+ * @returns {number[]}
+ */
 function polar2rectangular(r, th) {
     let coodinate = [0.0, 0.0];
     coodinate[0] = r * Math.cos(th);
@@ -1735,6 +1783,12 @@ function polar2rectangular(r, th) {
     return coodinate;
 }
 
+/**
+ * 直交座標を極座標に変換
+ * @param x
+ * @param y
+ * @returns {number[]}
+ */
 function rectangular2polar(x, y) {
     let polar = [0.0, 0.0];
 
@@ -1745,63 +1799,34 @@ function rectangular2polar(x, y) {
 }
 
 
-function context_draw(emotion_canvas) {
-    $('.slider').slider();
-    $('#slider_decide').click(function () {
+/**
+ * キャラクタ追加ボタンの挙動をとるリスナ
+ */
+function set_chara_add_button() {
+    $('#add_character').click(function () {
+        let target_comp = chara_emotion_clone.clone().appendTo($('.character_emotion_section'));
 
-        let test_data = [0, 0, 0, 0];
-        test_data[0] = $('#slider0').slider('value') / 100;
-        test_data[1] = $('#slider1').slider('value') / 100;
-        test_data[2] = $('#slider2').slider('value') / 100;
-        test_data[3] = $('#slider3').slider('value') / 100;
+        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[0]));
+        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[1]));
+        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[2]));
+        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[3]));
 
-        let ctx = emotion_canvas.getContext('2d');
-        ctx.clearRect(0, 0, emotion_canvas.width, emotion_canvas.height);
-
-
-        let emotional_center = 150;
-        let emotional_fullscale = 150;
-
-        //縦軸の描画
-        ctx.beginPath();
-        ctx.moveTo(150, 50);
-        ctx.lineTo(150, 250);
-        ctx.stroke();
-
-        //横軸の描画
-        ctx.beginPath();
-        ctx.moveTo(50, 150);
-        ctx.lineTo(250, 150);
-        ctx.stroke();
-
-        ctx.globalAlpha = 0.7;
-
-        ctx.strokeStyle = 'rgb(192,80,77)';
-        ctx.fillStyle = 'rgb(192,80,77)';
-
-        ctx.beginPath();
-        ctx.moveTo(emotional_center, emotional_center - test_data[0] * emotional_fullscale);
-        ctx.lineTo(emotional_center + test_data[1] * emotional_fullscale, emotional_center);
-        ctx.lineTo(emotional_center, emotional_center + test_data[2] * emotional_fullscale);
-        ctx.lineTo(emotional_center - test_data[3] * emotional_fullscale, emotional_center);
-        ctx.lineTo(emotional_center, emotional_center - test_data[0] * emotional_fullscale);
-        ctx.fill();
 
     });
-
 }
 
-// function emotion_background_draw(emotion_background) {
-//     let ctx = emotion_background.getContext('2d');
-//
-//     let img = new Image();
-//     img.onload = function () {
-//         ctx.drawImage(img,0,0,300,300);
-//
-//     };
-//
-//     img.src = 'img/emotion/7e52890a.jpg';
-//
-// }
-//
-//
+/**
+ * 感情保存ボタンの挙動（後で然るべきUIでファイル保存に実装する必要あり）
+ */
+function set_emotion_save_button() {
+    $("#emotion_save").click(function () {
+        let module = $('.emotion_externalization_module');
+        for (let i = 0; i < module.length; i++) {
+            let sliders = $(module[i]).find('.slider');
+            for (let j = 0; j < sliders.length; j++) {
+                console.log($(sliders[j]).slider('value'));
+            }
+        }
+    });
+}
+

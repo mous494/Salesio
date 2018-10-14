@@ -202,88 +202,101 @@ Story
         <div style="height: 300px; position: relative">
             <canvas id="chart_demo" height="300px"></canvas>
         </div>
-        <div class="emotion_externalization_module introduction">
-            <p>起</p>
-            <div class="emotion_canvases" style="position: relative ">
-                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
-                <canvas class="emotion_externalization_canvas" height="300"></canvas>
-            </div>
+        <button id="add_character">キャラ追加</button>
+        <br>
 
-            <div class="slider_wrapper">
-                悲しみ-喜び
-                <div class="slider axis1"></div>
-                嫌悪感-信頼
-                <div class="slider axis2"></div>
-                怒り-心配
-                <div class="slider axis3"></div>
-                予測-驚き
-                <div class="slider axis4"></div>
+        <div class="character_emotion_section">
+            <div class="character_emotion">
+                <div>名前：<input type="text" class="character_name"/></div>
+                <div class="emotion_externalization_module introduction">
+                    <p>起</p>
+                    <div class="emotion_canvases" style="position: relative ">
+                        <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                        <canvas class="emotion_externalization_canvas" height="300"></canvas>
+                    </div>
+
+                    <div class="slider_wrapper">
+                        悲しみ-喜び
+                        <div class="slider axis1"></div>
+                        嫌悪感-信頼
+                        <div class="slider axis2"></div>
+                        怒り-心配
+                        <div class="slider axis3"></div>
+                        予測-驚き
+                        <div class="slider axis4"></div>
+                        <div class="emotion_word"></div>
+                    </div>
+                    <!--<button class="slider_decide">感情決定！</button>-->
+                    <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
+                </div>
+
+                <div class="emotion_externalization_module development">
+                    <p>承</p>
+                    <div class="emotion_canvases" style="position: relative ">
+                        <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                        <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="slider_wrapper">
+                        悲しみ-喜び
+                        <div class="slider axis1"></div>
+                        嫌悪感-信頼
+                        <div class="slider axis2"></div>
+                        怒り-心配
+                        <div class="slider axis3"></div>
+                        予測-驚き
+                        <div class="slider axis4"></div>
+                        <div class="emotion_word"></div>
+                    </div>
+                    <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
+                    <!--<button class="slider_decide">感情決定！</button>-->
+                </div>
+                <div class="emotion_externalization_module turn">
+                    <p>転</p>
+                    <div class="emotion_canvases" style="position: relative ">
+                        <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                        <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="slider_wrapper">
+                        悲しみ-喜び
+                        <div class="slider axis1"></div>
+                        嫌悪感-信頼
+                        <div class="slider axis2"></div>
+                        怒り-心配
+                        <div class="slider axis3"></div>
+                        予測-驚き
+                        <div class="slider axis4"></div>
+                        <div class="emotion_word"></div>
+                    </div>
+                    <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
+                    <!--<button class="slider_decide">感情決定！</button>-->
+                </div>
+                <div class="emotion_externalization_module conclusion">
+                    <p>結</p>
+                    <div class="emotion_canvases" style="position: relative ">
+                        <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
+                        <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
+                    </div>
+
+                    <div class="slider_wrapper">
+                        悲しみ-喜び
+                        <div class="slider axis1"></div>
+                        嫌悪感-信頼
+                        <div class="slider axis2"></div>
+                        怒り-心配
+                        <div class="slider axis3"></div>
+                        予測-驚き
+                        <div class="slider axis4"></div>
+                        <div class="emotion_word"></div>
+                    </div>
+                    <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
+                    <!--<button class="slider_decide">感情決定！</button>-->
+                </div>
+                <br>
             </div>
-            <!--<button class="slider_decide">感情決定！</button>-->
-            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
         </div>
-
-        <div class="emotion_externalization_module">
-            <p>承</p>
-            <div class="emotion_canvases" style="position: relative ">
-                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
-                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
-            </div>
-
-            <div class="slider_wrapper">
-                悲しみ-喜び
-                <div class="slider axis1"></div>
-                嫌悪感-信頼
-                <div class="slider axis2"></div>
-                怒り-心配
-                <div class="slider axis3"></div>
-                予測-驚き
-                <div class="slider axis4"></div>
-            </div>
-            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
-            <!--<button class="slider_decide">感情決定！</button>-->
-        </div>
-        <div class="emotion_externalization_module">
-            <p>転</p>
-            <div class="emotion_canvases" style="position: relative ">
-                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
-                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
-            </div>
-
-            <div class="slider_wrapper">
-                悲しみ-喜び
-                <div class="slider axis1"></div>
-                嫌悪感-信頼
-                <div class="slider axis2"></div>
-                怒り-心配
-                <div class="slider axis3"></div>
-                予測-驚き
-                <div class="slider axis4"></div>
-            </div>
-            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
-            <!--<button class="slider_decide">感情決定！</button>-->
-        </div>
-        <div class="emotion_externalization_module">
-            <p>結</p>
-            <div class="emotion_canvases" style="position: relative ">
-                <!--<canvas id="emotion_background" width="300" height="300" style="position: absolute"></canvas>-->
-                <canvas class="emotion_externalization_canvas" width="300" height="300"></canvas>
-            </div>
-
-            <div class="slider_wrapper">
-                悲しみ-喜び
-                <div class="slider axis1"></div>
-                嫌悪感-信頼
-                <div class="slider axis2"></div>
-                怒り-心配
-                <div class="slider axis3"></div>
-                予測-驚き
-                <div class="slider axis4"></div>
-            </div>
-            <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
-            <!--<button class="slider_decide">感情決定！</button>-->
-        </div>
-
+        <button id="emotion_save">感情保存</button>
         <div style="clear: both"></div>
 
 
