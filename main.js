@@ -352,6 +352,7 @@ $(document).ready(function () {
             responsive: false,
             scales: {
                 yAxes: [{
+                    display:false,//軸の数字を消しました
                     ticks: {
                         max: 4,
                         min: -4,
@@ -363,10 +364,12 @@ $(document).ready(function () {
 
     });
 
+    //物語を読者がどう捉えているか→グラフ
+
     $('#curve_select').change(function () {
         let num = $('#curve_select').find('> option:selected').val();
         chartdemo.data.datasets[0].data = data_of_chart[num - 1];
-        //TODO:軸の数字無くてもいいかも
+
         chartdemo.update();
     });
 
@@ -1455,10 +1458,8 @@ function emotion_module_setting(emotion_module) {
 
 
             // ctx.globalAlpha = 0.7;
-
             // ctx.strokeStyle = 'rgb(192,80,77)';
             //  ctx.fillStyle = 'rgb(192,80,77)';
-
             // //感情点の描画
             // for(let i = 0;i<4;i++){
             //     if(test_data[i]!==0) {
@@ -1542,6 +1543,7 @@ function emotion_module_setting(emotion_module) {
             //表示用変数
             let emotion_words = '表現可能な感情：';
 
+            //感情が線表示可能な時
             if (start_number !== -1) {
 
                 ctx.beginPath();

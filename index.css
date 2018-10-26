@@ -47,7 +47,6 @@
 
 .emotion_externalization_module{
     float: left;
-    margin-bottom: 100px;
 }
 
 .emotion_externalization_canvas{
@@ -68,6 +67,7 @@
     position: relative;
     overflow: hidden;
     width: 1800px;
+    margin-top: 50px;
     /*white-space: nowrap;*/
 }
 
