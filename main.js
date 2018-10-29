@@ -103,7 +103,7 @@ let LOG = [];
 //
 // ];
 
-const data_of_chart = [[1, 2, 3, 4], [-1, -2, -3, -4], [2, 1, -1, -2], [-2, -1, 1, 2], [-2, 2, 2, -2], [2, -1, -1, 2], [-1, 1, -1, 1], [1, -1, 1, -1]];
+const data_of_chart = [[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [2, 1, 1, 2], [2, 1, 2, 1], [1, 2, 1, 2], [-1, 1, -1, 1], [1, -1, 1, -1]];
 
 const emotions = {
     "fear": {
@@ -241,6 +241,210 @@ const emotions = {
 
 };
 
+const dyads_emotin = {
+    "optimism":{
+        "consist_of":["anticipation","joy"]
+    },
+    "hope":{
+        "consist_of":["anticipation","trust"]
+    },
+    "anxiety":{
+        "consist_of":["anticipation","fear"]
+    },
+    "love":{
+        "consist_of":["joy","trust"]
+    },
+    "guilt":{
+        "consist_of":["joy","fear"]
+    },
+    "delight":{
+        "consist_of":["joy","surprise"]
+    },
+    "submission":{
+        "consist_of":["trust","fear"]
+    },
+    "curiosity":{
+        "consist_of":["trust","surprise"]
+    },
+    "sentimentality":{
+        "consist_of":["trust","sadness"]
+    },
+    "awe":{
+        "consist_of":["fear","surprise"]
+    },
+    "despair":{
+        "consist_of":["fear","sadness"]
+    },
+    "shame":{
+        "consist_of":["fear","disgust"]
+    },
+    "disapproval":{
+        "consist_of":["surprise","sadness"]
+    },
+    "unbelief":{
+        "consist_of":["surprise","disgust"]
+    },
+    "outrage":{
+        "consist_of":["surprise","anger"]
+    },
+    "remorse":{
+        "consist_of":["sadness","disgust"]
+    },
+    "envy":{
+        "consist_of":["sadness","anger"]
+    },
+    "pessimism":{
+        "consist_of":["sadness","anticipation"]
+    },
+    "contempt":{
+        "consist_of":["disgust","anger"]
+    },
+    "cynicism":{
+        "consist_of":["disgust","anticipation"]
+    },
+    "morbidness":{
+        "consist_of":["disgust","joy"]
+    },
+    "aggressiveness":{
+        "consist_of":["anger","anticipation"]
+    },
+    "pride":{
+        "consist_of":["anger","joy"]
+    },
+    "dominance":{
+        "consist_of":["anger","trust"]
+    }
+};
+
+const all_emotions = {
+    "basics":{
+        "joy":{
+            "jp_name":"喜び"
+        },
+        "trust":{
+            "jp_name":"信頼"
+        },
+        "fear":{
+            "jp_name":"恐れ"
+        },
+        "surprise":{
+            "jp_name":"驚き"
+        },
+        "sadness":{
+            "jp_name":"悲しみ"
+        },
+        "disgust":{
+            "jp_name":"嫌悪"
+        },
+        "anger":{
+            "jp_name":"怒り"
+        },
+        "anticipation":{
+            "jp_name":"期待（予測）"
+        }
+    },
+    "dyads":{
+        "optimism":{
+            "consist_of":["anticipation","joy"],
+            "jp_name":"楽観"
+        },
+        "hope":{
+            "consist_of":["anticipation","trust"],
+            "jp_name":"運命：希望"
+        },
+        "anxiety":{
+            "consist_of":["anticipation","fear"],
+            "jp_name":"不安"
+        },
+        "love":{
+            "consist_of":["joy","trust"],
+            "jp_name":"愛"
+        },
+        "guilt":{
+            "consist_of":["joy","fear"],
+            "jp_name":"罪悪感"
+        },
+        "delight":{
+            "consist_of":["joy","surprise"],
+            "jp_name":"感動"
+        },
+        "submission":{
+            "consist_of":["trust","fear"],
+            "jp_name":"福重"
+        },
+        "curiosity":{
+            "consist_of":["trust","surprise"],
+            "jp_name":"好奇心"
+        },
+        "sentimentality":{
+            "consist_of":["trust","sadness"],
+            "jp_name":"感傷"
+        },
+        "awe":{
+            "consist_of":["fear","surprise"],
+            "jp_name":"畏怖"
+        },
+        "despair":{
+            "consist_of":["fear","sadness"],
+            "jp_name":"絶望"
+        },
+        "shame":{
+            "consist_of":["fear","disgust"],
+            "jp_name":"恥辱"
+        },
+        "disapproval":{
+            "consist_of":["surprise","sadness"],
+            "jp_name":"拒絶"
+        },
+        "unbelief":{
+            "consist_of":["surprise","disgust"],
+            "jp_name":"憤慨"
+        },
+        "outrage":{
+            "consist_of":["surprise","anger"],
+            "jp_name":"憎悪"
+        },
+        "remorse":{
+            "consist_of":["sadness","disgust"],
+            "jp_name":"後悔"
+        },
+        "envy":{
+            "consist_of":["sadness","anger"],
+            "jp_name":"悲憤"
+        },
+        "pessimism":{
+            "consist_of":["sadness","anticipation"],
+            "jp_name":"悲観"
+        },
+        "contempt":{
+            "consist_of":["disgust","anger"],
+            "jp_name":"軽蔑"
+        },
+        "cynicism":{
+            "consist_of":["disgust","anticipation"],
+            "jp_name":"皮肉"
+        },
+        "morbidness":{
+            "consist_of":["disgust","joy"],
+            "jp_name":"不健全"
+        },
+        "aggressiveness":{
+            "consist_of":["anger","anticipation"],
+            "jp_name":"攻撃"
+        },
+        "pride":{
+            "consist_of":["anger","joy"],
+            "jp_name":"自尊心"
+        },
+        "dominance":{
+            "consist_of":["anger","trust"],
+            "jp_name":"優越"
+        }
+    }
+};
+
+
+
 
 class grobal_emotion {
     constructor() {
@@ -319,6 +523,47 @@ $(document).ready(function () {
 
     // let emotion_canvas = document.getElementsByClassName('emotion_externalization_canvas')[0];
     // context_draw(emotion_canvas);
+
+    //感情語を回してコンボボックスに入れていく
+    let keys = Object.keys(all_emotions);
+    //感情を回す
+    for (let i = 0; i < keys.length; i++) {
+        let emo_key = keys[i];
+
+        let emotion_names = Object.keys(all_emotions[emo_key]);
+        for(let j=0;j<emotion_names.length;j++) {
+            let name = all_emotions[emo_key][emotion_names[j]].jp_name;
+            $('.emotion_selector').append(`<option value="${emotion_names[j]}">${name}</option>`)
+
+        }
+    }
+//コンボボックスを変更したときのイベントリスナ
+    $('.emotion_selector').on('change',function () {
+        let consist_of;
+        let val = $(this).val();
+        let $emotion_words_area =$(this).siblings('.emotion_word');
+        let emotion_text='';
+
+        let keys = Object.keys(all_emotions.dyads);
+        for (let i = 0; i < keys.length; i++) {
+            if(val===keys[i]){
+                consist_of = all_emotions.dyads[val].consist_of;
+
+                for(let i = 0; i<consist_of.length;i++){
+                    emotion_text+=all_emotions.basics[consist_of[i]].jp_name+'　';
+
+                }
+                emotion_text += "の感情で表現出来ますよ！"
+                $emotion_words_area.empty();
+                $emotion_words_area.append(emotion_text);
+                break;
+            }
+        }
+        });
+
+
+
+
 
 
     emotion_module_setting($($('.emotion_externalization_module')[0]));
