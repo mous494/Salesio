@@ -600,7 +600,7 @@ $(document).ready(function () {
                     display:false,//軸の数字を消しました
                     ticks: {
                         max: 4,
-                        min: -4,
+                        min: 0,
                         stepSize: 1
                     }
                 }]
