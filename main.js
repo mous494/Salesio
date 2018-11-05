@@ -103,6 +103,7 @@ let LOG = [];
 //
 // ];
 
+//ここ感情曲線のデータ
 const data_of_chart = [[1, 2, 3, 4], [4, 3, 2, 1], [1, 4, 4, 1], [4, 1, 1, 4], [4, 1, 4, 1], [1, 4, 1, 4]];
 //[-1, 1, -1, 1], [1, -1, 1, -1]
 
@@ -372,7 +373,7 @@ const all_emotions = {
         },
         "submission": {
             "consist_of": ["trust", "fear"],
-            "jp_name": "福重"
+            "jp_name": "服従"
         },
         "curiosity": {
             "consist_of": ["trust", "surprise"],
@@ -570,11 +571,14 @@ $(document).ready(function () {
                 }
             }
         }
-        emotion_text += "の感情で表現出来ますよ"
+        emotion_text += "の感情で表現出来ますよ";
         $emotion_words_area.empty();
         $emotion_words_area.append(emotion_text);
 
     });
+
+
+
 
 
     emotion_module_setting($($('.emotion_externalization_module')[0]));
@@ -1920,111 +1924,6 @@ function emotion_module_setting(emotion_module) {
 
 }
 
-
-//
-// const emotions = {
-//     "fear": {
-//         "th": 0,
-//         "r": 2
-//     },
-//     "trust": {
-//         "th": Math.PI / 4,
-//         "r": 2
-//     },
-//     "joy": {
-//         "th": Math.PI / 2,
-//         "r": 2
-//     },
-//     "anticipation": {
-//         "th": 3 * Math.PI / 4,
-//         "r": 2
-//     },
-//     "anger": {
-//         "th": Math.PI,
-//         "r": 2
-//     },
-//     "disgust": {
-//         "th": 5 * Math.PI / 4,
-//         "r": 2
-//     },
-//     "sadness": {
-//         "th": 3 * Math.PI / 2,
-//         "r": 2
-//     },
-//     "surprise": {
-//         "th": 7 * Math.PI / 4,
-//         "r": 2
-//     },
-//
-//     "terror": {
-//         "th": 0,
-//         "r": 1
-//     },
-//
-//     "admiration": {
-//         "th": Math.PI / 4,
-//         "r": 1
-//     },
-//     "ecstasy": {
-//         "th": Math.PI / 2,
-//         "r": 1
-//     },
-//     "vigilance": {
-//         "th": 3 * Math.PI / 4,
-//         "r": 1
-//     },
-//     "rage": {
-//         "th": Math.PI,
-//         "r": 1
-//     },
-//     "loathing": {
-//         "th": 5 * Math.PI / 4,
-//         "r": 1
-//     },
-//     "grief": {
-//         "th": 3 * Math.PI / 2,
-//         "r": 1
-//     },
-//     "amazement": {
-//         "th": 7 * Math.PI / 4,
-//         "r": 1
-//     },
-//
-//     "apprehension": {
-//         "th": 0,
-//         "r": 3
-//     },
-//
-//     "acceptance": {
-//         "th": Math.PI / 4,
-//         "r": 3
-//     },
-//     "serenity": {
-//         "th": Math.PI / 2,
-//         "r": 3
-//     },
-//     "interest": {
-//         "th": 3 * Math.PI / 4,
-//         "r": 3
-//     },
-//     "annoyance": {
-//         "th": Math.PI,
-//         "r": 3
-//     },
-//     "boredom": {
-//         "th": 5 * Math.PI / 4,
-//         "r": 3
-//     },
-//     "pensiveness": {
-//         "th": 3 * Math.PI / 2,
-//         "r": 3
-//     },
-//     "distraction": {
-//         "th": 7 * Math.PI / 4,
-//         "r": 3
-//     }
-//
-// };
 
 /**
  * 極座標を直交座標に変換
