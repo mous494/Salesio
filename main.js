@@ -243,107 +243,63 @@ const emotions = {
 
 };
 
-const dyads_emotin = {
-    "optimism": {
-        "consist_of": ["anticipation", "joy"]
-    },
-    "hope": {
-        "consist_of": ["anticipation", "trust"]
-    },
-    "anxiety": {
-        "consist_of": ["anticipation", "fear"]
-    },
-    "love": {
-        "consist_of": ["joy", "trust"]
-    },
-    "guilt": {
-        "consist_of": ["joy", "fear"]
-    },
-    "delight": {
-        "consist_of": ["joy", "surprise"]
-    },
-    "submission": {
-        "consist_of": ["trust", "fear"]
-    },
-    "curiosity": {
-        "consist_of": ["trust", "surprise"]
-    },
-    "sentimentality": {
-        "consist_of": ["trust", "sadness"]
-    },
-    "awe": {
-        "consist_of": ["fear", "surprise"]
-    },
-    "despair": {
-        "consist_of": ["fear", "sadness"]
-    },
-    "shame": {
-        "consist_of": ["fear", "disgust"]
-    },
-    "disapproval": {
-        "consist_of": ["surprise", "sadness"]
-    },
-    "unbelief": {
-        "consist_of": ["surprise", "disgust"]
-    },
-    "outrage": {
-        "consist_of": ["surprise", "anger"]
-    },
-    "remorse": {
-        "consist_of": ["sadness", "disgust"]
-    },
-    "envy": {
-        "consist_of": ["sadness", "anger"]
-    },
-    "pessimism": {
-        "consist_of": ["sadness", "anticipation"]
-    },
-    "contempt": {
-        "consist_of": ["disgust", "anger"]
-    },
-    "cynicism": {
-        "consist_of": ["disgust", "anticipation"]
-    },
-    "morbidness": {
-        "consist_of": ["disgust", "joy"]
-    },
-    "aggressiveness": {
-        "consist_of": ["anger", "anticipation"]
-    },
-    "pride": {
-        "consist_of": ["anger", "joy"]
-    },
-    "dominance": {
-        "consist_of": ["anger", "trust"]
-    }
-};
+
+const positive_emotions_relations = getCsv("test_rule_count_positive_th5.csv");
+const negative_emotions_relations = getCsv("test_rule_count_negative_th5.csv");
+
+console.log(positive_emotions_relations);
+console.log(negative_emotions_relations);
+
 
 const all_emotions = {
     "basics": {
         "joy": {
             "jp_name": "喜び",
-            "jp_move":""
+            "rank": 8,
+            "color": "yellow",
+            "angle": 1
         },
         "trust": {
-            "jp_name": "信頼"
+            "jp_name": "信頼",
+            "rank": 6,
+            "color": "lime",
+            "angle": 2
         },
         "fear": {
-            "jp_name": "恐れ"
+            "jp_name": "恐れ",
+            "rank": 3,
+            "color": "green",
+            "angle": 3
         },
         "surprise": {
-            "jp_name": "驚き"
+            "jp_name": "驚き",
+            "rank": 7,
+            "color": "aqua",
+            "angle": 4
         },
         "sadness": {
-            "jp_name": "悲しみ"
+            "jp_name": "悲しみ",
+            "rank": 1,
+            "color": "blue",
+            "angle": 5
         },
         "disgust": {
-            "jp_name": "嫌悪"
+            "jp_name": "嫌悪",
+            "rank": 4,
+            "color": "purple",
+            "angle": 6
         },
         "anger": {
-            "jp_name": "怒り"
+            "jp_name": "怒り",
+            "rank": 2,
+            "color": "red",
+            "angle": 7
         },
         "anticipation": {
-            "jp_name": "期待（予測）"
+            "jp_name": "期待（予測）",
+            "rank": 5,
+            "color": "Orange",
+            "angle": 8
         }
     },
     "dyads": {
@@ -353,7 +309,7 @@ const all_emotions = {
         },
         "hope": {
             "consist_of": ["anticipation", "trust"],
-            "jp_name": "運命：希望"
+            "jp_name": "運命"
         },
         "anxiety": {
             "consist_of": ["anticipation", "fear"],
@@ -449,8 +405,9 @@ const all_emotions = {
 
 class grobal_emotion {
     constructor() {
-        this.reader_curve = {};
-        this.emotions = [{name: '', emotion: [0, 0, 0, 0]}];
+        this.reader_curve = 0;
+        this.emotions = [];
+        this.num_of_character = 1;
     }
 }
 
@@ -538,58 +495,22 @@ $(document).ready(function () {
 
         }
     }
-//コンボボックスを変更したときのイベントリスナ
-    $('.emotion_selector').on('change', function () {
-        let consist_of;
-        let val = $(this).val();
-        let $emotion_words_area = $(this).siblings('.emotion_word');
-        let emotion_text = '';
-        let mathed =false;
+    //初期の感情を書いておく
+    let canvas = $('.emotion_externalization_canvas');
+
+    for(let a=0;a<canvas.length;a++){
+        draw_wheel('none',$(canvas[a]));
+    }
 
 
-        //基本感情の時
-        let keys = Object.keys(all_emotions.basics);
-        for (let i=0; i<keys.length;i++){
-            if(val===keys[i]){
-                emotion_text += all_emotions.basics[keys[i]].jp_name+"だけ";
-                mathed=true;
-                break;
-            }
-        }
-        //複合感情の時
-        if (!mathed) {
-            keys = Object.keys(all_emotions.dyads);
-            for (let i = 0; i < keys.length; i++) {
-                if (val === keys[i]) {
-                    consist_of = all_emotions.dyads[val].consist_of;
-
-                    for (let i = 0; i < consist_of.length; i++) {
-                        emotion_text += all_emotions.basics[consist_of[i]].jp_name + '　';
-
-                    }
-                    break;
-                }
-            }
-        }
-        emotion_text += "の感情で表現出来ますよ";
-        $emotion_words_area.empty();
-        $emotion_words_area.append(emotion_text);
-
-    });
-
-
-
-
-
-    emotion_module_setting($($('.emotion_externalization_module')[0]));
-    emotion_module_setting($($('.emotion_externalization_module')[1]));
-    emotion_module_setting($($('.emotion_externalization_module')[2]));
-    emotion_module_setting($($('.emotion_externalization_module')[3]));
-
-
+//コンボボックス、チェックボックス、コメントを変更したときのイベントリスナ
+    $('.emotion_selector').on('change', emotion_change_event);
     chara_emotion_clone = $('.character_emotion').clone();
+    $('.emotion_enable_check').on('change',set_checkbox_change);
+    $('.character_emotion_contents').on('change',set_comment_change);
     set_chara_add_button();
-    set_emotion_save_button();
+
+    // set_emotion_save_button();
 
 
     //TODO:ここに物語曲線のインターフェイスの実装
@@ -624,12 +545,14 @@ $(document).ready(function () {
     });
 
     //物語を読者がどう捉えているか→グラフ
-
     $('#curve_select').change(function () {
         let num = $('#curve_select').find('> option:selected').val();
         chartdemo.data.datasets[0].data = data_of_chart[num - 1];
+        emotion_data.reader_curve = num - 1;
 
         chartdemo.update();
+        generate_emotion_feedback();
+        log_add('感情曲線を変更');
     });
 
 
@@ -1574,12 +1497,13 @@ function log_add(comment) {
     var n_data = data.nodes.get();
     var e_data = data.edges.get();
     var timeline_data = timeline_items.get();
+    let stored_emotional_data = JSON.parse(JSON.stringify(emotion_data))
     var store_data = {
         nodes: n_data,
         edges: e_data,
         timeline: timeline_data,
         comment: comment,
-
+        emotion:stored_emotional_data
     };
     LOG.push(store_data);
 }
@@ -1679,250 +1603,227 @@ function log_move(step) {
     $('#log_step').text(text);
 }
 
-
-function emotion_module_setting(emotion_module) {
-    let sliders = emotion_module.find('.slider');
-    let test_data = [0, 0, 0, 0];
-    sliders.slider({
-        min: -3,
-        max: 3,
-        change: function (event, ui) {
-
-            for (let i = 0; i < 4; i++) {
-                test_data[i] = $(sliders[i]).slider('value') / 3;
-            }
-
-
-            let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
-            ctx.clearRect(0, 0, 300, 300);
-
-
-            const emotional_center = 150;
-            const emotional_fullscale = 150;//基準点の場所
-            const axis_length = 150;//軸線の長さ
-            const emotional_max = 120;//感情点の長さ
-
-            ctx.lineWidth = 1.0;
-            ctx.strokeStyle = 'rgb(0,0,0)';
-            ctx.fillStyle = 'rgb(0,0,0)';
-
-
-            // 軸の描画
-            for (let i = 0; i < 4; i++) {
-                ctx.beginPath();
-                ctx.moveTo(emotional_center + polar2rectangular(axis_length, Math.PI * i / 4)[0], emotional_center - polar2rectangular(axis_length, Math.PI * i / 4)[1]);
-                ctx.lineTo(emotional_center + polar2rectangular(axis_length, Math.PI * (4 + i) / 4)[0], emotional_center - polar2rectangular(axis_length, Math.PI * (4 + i) / 4)[1]);
-                ctx.stroke();
-            }
-
-
-            // ctx.globalAlpha = 0.7;
-            // ctx.strokeStyle = 'rgb(192,80,77)';
-            //  ctx.fillStyle = 'rgb(192,80,77)';
-            // //感情点の描画
-            // for(let i = 0;i<4;i++){
-            //     if(test_data[i]!==0) {
-            //         ctx.beginPath();
-            //
-            //
-            //
-            //         // ctx.circle(emotional_center + polar2rectangular(test_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[0], emotional_center - polar2rectangular(test_data[i] * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[1], 5);
-            //         ctx.stroke();
-            //     }
-            // }
-
-
-            for (let i = 0; i < 4; i++) {
-                if (test_data[i] !== 0) {
-
-                    let emotional_zero_point_X = emotional_center + polar2rectangular(Math.sign(test_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[0];
-                    let emotional_zero_point_Y = emotional_center - polar2rectangular(Math.sign(test_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[1];
-                    //感情基準点の描画
-                    ctx.beginPath();
-                    ctx.circle(emotional_zero_point_X, emotional_zero_point_Y, 5);
-                    ctx.stroke();
-
-
-                    let emotional_point_from_zero_X;
-                    let emotional_point_from_zero_Y;
-
-                    if (Math.sign(test_data[i]) > 0) {
-                        emotional_point_from_zero_X = polar2rectangular(Math.abs(test_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -i / 4)[0];
-                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(test_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -i / 4)[1];
-                    }
-                    else if (Math.sign(test_data[i] < 0)) {
-                        emotional_point_from_zero_X = polar2rectangular(Math.abs(test_data[i]) * emotional_max, Math.PI / 2 - Math.PI * i / 4)[0];
-                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(test_data[i]) * emotional_max, Math.PI / 2 - Math.PI * i / 4)[1];
-                    }
-
-                    let point_x = emotional_zero_point_X + emotional_point_from_zero_X;
-                    let point_y = emotional_zero_point_Y - emotional_point_from_zero_Y;
-
-                    ctx.beginPath();
-                    ctx.circle(point_x, point_y, 5);
-                    ctx.stroke()
-                }
-            }
-
-            //判定用のデータ作成
-            let dup_data = new Array(8);
-            for (let i = 0; i < 4; i++) {
-                dup_data[i] = test_data[i];
-                dup_data[i + 4] = test_data[i];
-            }
-
-
-            //filltest
-            let start_number = -1;
-            let canditate_state_number;
-            for (let i = 0; i < 4; i++) {
-                let change_sign = 0;
-                for (let j = i; j < i + 3; j++) {
-                    if (Math.sign(dup_data[j]) !== Math.sign(dup_data[j + 1])) {
-                        change_sign++;
-                        canditate_state_number = j + 1;
-                    }
-                }
-                if (change_sign === 0) {
-                    start_number = 0;
-                    break;
-                }
-                else if (change_sign === 1) {
-                    start_number = canditate_state_number;
-                    break;
-                }
-                //例外パターン(no1 no4axis関連）
-                if ((Math.sign(dup_data[0]) === Math.sign(dup_data[3])) && ((Math.sign(dup_data[0]) !== Math.sign(dup_data[1]))) || (Math.sign(dup_data[0]) !== Math.sign(dup_data[2]))) {
-                    start_number = -1;
-                    break;
-                }
-
-            }
-
-            //表示用変数
-            let emotion_words = '表現可能な感情：';
-
-            //感情が線表示可能な時
-            if (start_number !== -1) {
-
-                ctx.beginPath();
-                for (let i = start_number; i < start_number + 4; i++) {
-
-                    let emotional_zero_point_X = emotional_center + polar2rectangular(Math.sign(dup_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
-                    let emotional_zero_point_Y = emotional_center - polar2rectangular(Math.sign(dup_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
-
-                    let emotional_point_from_zero_X;
-                    let emotional_point_from_zero_Y;
-
-                    if (Math.sign(dup_data[i]) > 0) {
-                        emotional_point_from_zero_X = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
-                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
-                    }
-                    else if (Math.sign(dup_data[i] < 0)) {
-                        emotional_point_from_zero_X = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, Math.PI / 2 - Math.PI * (i % 4) / 4)[0];
-                        emotional_point_from_zero_Y = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, Math.PI / 2 - Math.PI * (i % 4) / 4)[1];
-                    }
-
-                    let point_x = emotional_zero_point_X + emotional_point_from_zero_X;
-                    let point_y = emotional_zero_point_Y - emotional_point_from_zero_Y;
-
-
-                    if (i === start_number)
-                        ctx.moveTo(point_x, point_y);
-                    else
-                        ctx.lineTo(point_x, point_y);
-
-                }
-
-                ctx.lineWidth = 3.0;
-                ctx.strokeStyle = 'rgba(192, 80, 77, 0.7)';
-                ctx.stroke();
-
-
-                //外化可能な感情の抽出
-                const keys = Object.keys(emotions);
-
-                //感情を回す
-                for (let i = 0; i < keys.length; i++) {
-                    let emotion_name = keys[i];
-                    let r = emotions[keys[i]].r * emotional_max / 3;
-                    let th = emotions[keys[i]].th;
-
-                    const coodinate = polar2rectangular(r, th);
-                    let sum_emotion = 0;
-                    for (let j = 0; j < 4; j++) {
-                        if (Math.abs(test_data[j]) === (4 - emotions[keys[i]].r) / 3) {
-                            //値の絶対値で偏角が違う
-                            if (test_data[j] >= 0) {
-                                // 大きさが一致している
-                                if (emotions[keys[i]].th === j * Math.PI / 4) {
-                                    //plusの時、偏角が一致している
-                                    emotion_words += emotion_name + '（' + emotions[keys[i]].jp_name + '）';
-                                    console.log(emotion_name);
-                                }
-                            }
-                            else {
-                                //マイナス側
-                                if (emotions[keys[i]].th === j * Math.PI / 4 - Math.PI) {
-                                    //plusの時、偏角が一致している
-                                    emotion_words += emotion_name + '（' + emotions[keys[i]].jp_name + '）';
-                                    console.log(emotion_name);
-
-                                }
-                            }
-                        }
-                        sum_emotion += test_data[j];
-
-                    }
-                    if (sum_emotion >= 4)
-                        emotion_words = "実現可能な感情：conflict（葛藤）"
-
-                }
-            }
-            else {
-                emotion_words = '実現が難しい感情状態です';
-
-            }
-
-            //感情ワードの表示
-            let emotion_text_area = $(ui.handle).parents('.slider_wrapper').find('.emotion_word');
-            emotion_text_area.empty();
-            emotion_text_area.append(emotion_words);
-        }
-    });
-
-
-    let canvas = emotion_module.find('.emotion_externalization_canvas')[0];
-
-    canvas.addEventListener('click', function (e) {
-        const rect = e.target.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const max_emo = 110;
-
-        const keys = Object.keys(emotions);
-        for (let i = 0; i < keys.length; i++) {
-            let emotion_name = keys[i];
-            let r = emotions[keys[i]].r * max_emo / 3;
-            let th = emotions[keys[i]].th;
-
-            const coodinate = polar2rectangular(r, th);
-
-            // console.log(x);
-            // console.log(y);
-            // console.log(coodinate);
-
-            if ((Math.pow((x - (coodinate[0] + 150)), 2) + Math.pow((y - (-coodinate[1] + 150)), 2)) < 250) {
-                console.log(emotion_name);
-            }
-        }
-
-
-    }, false);
-
-
-}
+//
+// function emotion_module_setting(emotion_module) {
+//     let sliders = emotion_module.find('.slider');
+//     let test_data = [0, 0, 0, 0];
+//     sliders.slider({
+//         min: -3,
+//         max: 3,
+//         change: function (event, ui) {
+//
+//             for (let i = 0; i < 4; i++) {
+//                 test_data[i] = $(sliders[i]).slider('value') / 3;
+//             }
+//
+//
+//             let ctx = emotion_module.find('.emotion_externalization_canvas')[0].getContext('2d');
+//             ctx.clearRect(0, 0, 300, 300);
+//
+//
+//             const emotional_center = 150;
+//             const emotional_fullscale = 150;//基準点の場所
+//             const axis_length = 150;//軸線の長さ
+//             const emotional_max = 120;//感情点の長さ
+//
+//             ctx.lineWidth = 1.0;
+//             ctx.strokeStyle = 'rgb(0,0,0)';
+//             ctx.fillStyle = 'rgb(0,0,0)';
+//
+//
+//
+//
+//             for (let i = 0; i < 4; i++) {
+//                 if (test_data[i] !== 0) {
+//
+//                     let emotional_zero_point_X = emotional_center + polar2rectangular(Math.sign(test_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[0];
+//                     let emotional_zero_point_Y = emotional_center - polar2rectangular(Math.sign(test_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -i / 4)[1];
+//                     //感情基準点の描画
+//                     ctx.beginPath();
+//                     ctx.circle(emotional_zero_point_X, emotional_zero_point_Y, 5);
+//                     ctx.stroke();
+//
+//
+//                     let emotional_point_from_zero_X;
+//                     let emotional_point_from_zero_Y;
+//
+//                     if (Math.sign(test_data[i]) > 0) {
+//                         emotional_point_from_zero_X = polar2rectangular(Math.abs(test_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -i / 4)[0];
+//                         emotional_point_from_zero_Y = polar2rectangular(Math.abs(test_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -i / 4)[1];
+//                     }
+//                     else if (Math.sign(test_data[i] < 0)) {
+//                         emotional_point_from_zero_X = polar2rectangular(Math.abs(test_data[i]) * emotional_max, Math.PI / 2 - Math.PI * i / 4)[0];
+//                         emotional_point_from_zero_Y = polar2rectangular(Math.abs(test_data[i]) * emotional_max, Math.PI / 2 - Math.PI * i / 4)[1];
+//                     }
+//
+//                     let point_x = emotional_zero_point_X + emotional_point_from_zero_X;
+//                     let point_y = emotional_zero_point_Y - emotional_point_from_zero_Y;
+//
+//                     ctx.beginPath();
+//                     ctx.circle(point_x, point_y, 5);
+//                     ctx.stroke()
+//                 }
+//             }
+//
+//             //判定用のデータ作成
+//             let dup_data = new Array(8);
+//             for (let i = 0; i < 4; i++) {
+//                 dup_data[i] = test_data[i];
+//                 dup_data[i + 4] = test_data[i];
+//             }
+//
+//
+//             //filltest
+//             let start_number = -1;
+//             let canditate_state_number;
+//             for (let i = 0; i < 4; i++) {
+//                 let change_sign = 0;
+//                 for (let j = i; j < i + 3; j++) {
+//                     if (Math.sign(dup_data[j]) !== Math.sign(dup_data[j + 1])) {
+//                         change_sign++;
+//                         canditate_state_number = j + 1;
+//                     }
+//                 }
+//                 if (change_sign === 0) {
+//                     start_number = 0;
+//                     break;
+//                 }
+//                 else if (change_sign === 1) {
+//                     start_number = canditate_state_number;
+//                     break;
+//                 }
+//                 //例外パターン(no1 no4axis関連）
+//                 if ((Math.sign(dup_data[0]) === Math.sign(dup_data[3])) && ((Math.sign(dup_data[0]) !== Math.sign(dup_data[1]))) || (Math.sign(dup_data[0]) !== Math.sign(dup_data[2]))) {
+//                     start_number = -1;
+//                     break;
+//                 }
+//
+//             }
+//
+//             //表示用変数
+//             let emotion_words = '表現可能な感情：';
+//
+//             //感情が線表示可能な時
+//             if (start_number !== -1) {
+//
+//                 ctx.beginPath();
+//                 for (let i = start_number; i < start_number + 4; i++) {
+//
+//                     let emotional_zero_point_X = emotional_center + polar2rectangular(Math.sign(dup_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
+//                     let emotional_zero_point_Y = emotional_center - polar2rectangular(Math.sign(dup_data[i]) * emotional_fullscale, Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
+//
+//                     let emotional_point_from_zero_X;
+//                     let emotional_point_from_zero_Y;
+//
+//                     if (Math.sign(dup_data[i]) > 0) {
+//                         emotional_point_from_zero_X = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -(i % 4) / 4)[0];
+//                         emotional_point_from_zero_Y = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, -Math.PI / 2 + Math.PI * -(i % 4) / 4)[1];
+//                     }
+//                     else if (Math.sign(dup_data[i] < 0)) {
+//                         emotional_point_from_zero_X = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, Math.PI / 2 - Math.PI * (i % 4) / 4)[0];
+//                         emotional_point_from_zero_Y = polar2rectangular(Math.abs(dup_data[i]) * emotional_max, Math.PI / 2 - Math.PI * (i % 4) / 4)[1];
+//                     }
+//
+//                     let point_x = emotional_zero_point_X + emotional_point_from_zero_X;
+//                     let point_y = emotional_zero_point_Y - emotional_point_from_zero_Y;
+//
+//
+//                     if (i === start_number)
+//                         ctx.moveTo(point_x, point_y);
+//                     else
+//                         ctx.lineTo(point_x, point_y);
+//
+//                 }
+//
+//                 ctx.lineWidth = 3.0;
+//                 ctx.strokeStyle = 'rgba(192, 80, 77, 0.7)';
+//                 ctx.stroke();
+//
+//
+//                 //外化可能な感情の抽出
+//                 const keys = Object.keys(emotions);
+//
+//                 //感情を回す
+//                 for (let i = 0; i < keys.length; i++) {
+//                     let emotion_name = keys[i];
+//                     let r = emotions[keys[i]].r * emotional_max / 3;
+//                     let th = emotions[keys[i]].th;
+//
+//                     const coodinate = polar2rectangular(r, th);
+//                     let sum_emotion = 0;
+//                     for (let j = 0; j < 4; j++) {
+//                         if (Math.abs(test_data[j]) === (4 - emotions[keys[i]].r) / 3) {
+//                             //値の絶対値で偏角が違う
+//                             if (test_data[j] >= 0) {
+//                                 // 大きさが一致している
+//                                 if (emotions[keys[i]].th === j * Math.PI / 4) {
+//                                     //plusの時、偏角が一致している
+//                                     emotion_words += emotion_name + '（' + emotions[keys[i]].jp_name + '）';
+//                                     console.log(emotion_name);
+//                                 }
+//                             }
+//                             else {
+//                                 //マイナス側
+//                                 if (emotions[keys[i]].th === j * Math.PI / 4 - Math.PI) {
+//                                     //plusの時、偏角が一致している
+//                                     emotion_words += emotion_name + '（' + emotions[keys[i]].jp_name + '）';
+//                                     console.log(emotion_name);
+//
+//                                 }
+//                             }
+//                         }
+//                         sum_emotion += test_data[j];
+//
+//                     }
+//                     if (sum_emotion >= 4)
+//                         emotion_words = "実現可能な感情：conflict（葛藤）"
+//
+//                 }
+//             }
+//             else {
+//                 emotion_words = '実現が難しい感情状態です';
+//
+//             }
+//
+//             //感情ワードの表示
+//             let emotion_text_area = $(ui.handle).parents('.slider_wrapper').find('.emotion_word');
+//             emotion_text_area.empty();
+//             emotion_text_area.append(emotion_words);
+//         }
+//     });
+//
+//
+//     let canvas = emotion_module.find('.emotion_externalization_canvas')[0];
+//
+//     canvas.addEventListener('click', function (e) {
+//         const rect = e.target.getBoundingClientRect();
+//         const x = e.clientX - rect.left;
+//         const y = e.clientY - rect.top;
+//
+//         const max_emo = 110;
+//
+//         const keys = Object.keys(emotions);
+//         for (let i = 0; i < keys.length; i++) {
+//             let emotion_name = keys[i];
+//             let r = emotions[keys[i]].r * max_emo / 3;
+//             let th = emotions[keys[i]].th;
+//
+//             const coodinate = polar2rectangular(r, th);
+//
+//             // console.log(x);
+//             // console.log(y);
+//             // console.log(coodinate);
+//
+//             if ((Math.pow((x - (coodinate[0] + 150)), 2) + Math.pow((y - (-coodinate[1] + 150)), 2)) < 250) {
+//                 console.log(emotion_name);
+//             }
+//         }
+//
+//
+//     }, false);
+//
+//
+// }
 
 
 /**
@@ -1955,6 +1856,54 @@ function rectangular2polar(x, y) {
 }
 
 
+function emotion_change_event() {
+    let consist_of;
+    let val = $(this).val();
+    let $emotion_words_area = $(this).siblings('.emotion_word');
+    let $emotion_canvas = $(this).parent().siblings('.emotion_canvases').children('.emotion_externalization_canvas');
+    let emotion_text = '';
+    let mathed = false;
+
+    draw_wheel(val, $emotion_canvas);
+
+    //基本感情の時
+    let keys = Object.keys(all_emotions.basics);
+    for (let i = 0; i < keys.length; i++) {
+        if (val === keys[i]) {
+            emotion_text += all_emotions.basics[keys[i]].jp_name + "だけ";
+            mathed = true;
+            break;
+        }
+    }
+    //複合感情の時
+    if (!mathed) {
+        keys = Object.keys(all_emotions.dyads);
+        for (let i = 0; i < keys.length; i++) {
+            if (val === keys[i]) {
+                consist_of = all_emotions.dyads[val].consist_of;
+
+                for (let i = 0; i < consist_of.length; i++) {
+                    emotion_text += all_emotions.basics[consist_of[i]].jp_name + '　';
+
+                }
+                break;
+            }
+        }
+    }
+    emotion_text += "の感情で表現出来ますよ";
+    $emotion_words_area.empty();
+    $emotion_words_area.append(emotion_text);
+
+    save_character_emotion();
+    generate_emotion_feedback();
+
+    //ここからログ関係の処理
+    let chara_name = $(this).parents('.character_emotion').find('.character_name').val();
+    log_add(chara_name+'の感情を変更しました');
+
+}
+
+
 /**
  * キャラクタ追加ボタンの挙動をとるリスナ
  */
@@ -1962,29 +1911,336 @@ function set_chara_add_button() {
     $('#add_character').click(function () {
         let target_comp = chara_emotion_clone.clone().appendTo($('.character_emotion_section'));
 
-        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[0]));
-        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[1]));
-        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[2]));
-        emotion_module_setting($(target_comp.find('.emotion_externalization_module')[3]));
+        let canvas = target_comp.find('.emotion_externalization_canvas');
+
+        for(let a=0;a<canvas.length;a++){
+            draw_wheel('none',$(canvas[a]));
+        }
+
+        $('.emotion_selector').off('change');
+        $('.emotion_selector').on('change',emotion_change_event);
+        $('.emotion_enable_check').off('change');
+        $('.emotion_enable_check').on('change',set_checkbox_change);
+        $('.delete_chara').off('click');
+        $('.delete_chara').on('click',set_chara_remove_button);
+        $('.character_emotion_contents').off('change');
+        $('.character_emotion_contents').on('change',set_comment_change);
 
 
+
+        emotion_data.num_of_character++;
+        log_add('キャラクター追加');
     });
 }
 
-/**
- * 感情保存ボタンの挙動（後で然るべきUIでファイル保存に実装する必要あり）
- */
-function set_emotion_save_button() {
-    // language=JQuery-CSS
-    $("#emotion_save").click(function () {
-        let module = $('.emotion_externalization_module');
-        for (let i = 0; i < module.length; i++) {
-            let sliders;
-            sliders = $(module[i]).find('.slider');
-            for (let j = 0; j < sliders.length; j++) {
-                console.log($(sliders[j]).slider('value'));
+function set_chara_remove_button() {
+    let a = $(this).parents('.character_emotion');
+    let name = $(this).siblings('.character_name').val();
+    a.remove();
+
+    emotion_data.num_of_character--;
+    log_add(name+'を削除しました');
+
+}
+
+function set_checkbox_change() {
+    save_character_emotion();
+    generate_emotion_feedback();
+
+    //ここからログ関連の処理
+    let chara_name = $(this).parents('.character_emotion').find('.character_name').val();
+    log_add(chara_name+'の注目チェックボックスを変更しました');
+}
+
+function set_comment_change() {
+    save_character_emotion();
+
+    let chara_name = $(this).parents('.character_emotion').find('.character_name').val();
+    log_add(chara_name+'のコメントを変更しました');
+}
+
+// /**
+//  * 感情保存ボタンの挙動（後で然るべきUIでファイル保存に実装する必要あり）
+//  */
+// function set_emotion_save_button() {
+//     // language=JQuery-CSS
+//     $("#emotion_save").click(function () {
+//         let module = $('.emotion_externalization_module');
+//         for (let i = 0; i < module.length; i++) {
+//             let sliders;
+//             sliders = $(module[i]).find('.slider');
+//             for (let j = 0; j < sliders.length; j++) {
+//                 console.log($(sliders[j]).slider('value'));
+//             }
+//         }
+//     });
+// }
+
+
+function generate_emotion_feedback() {
+    let emotional_curve = data_of_chart[emotion_data.reader_curve];
+    let emotional_up_down = [];//感情曲線の増減を持ってる変数
+    let have_problem=false;
+
+    $('#emotion_result').empty();
+
+    for (let i = 0; i < 3; i++) {
+        if (emotional_curve[i] === emotional_curve[i + 1])
+            emotional_up_down[i] = "nan";
+        else if (emotional_curve[i] > emotional_curve[i + 1])
+            emotional_up_down[i] = "down";
+        else if (emotional_curve[i] < emotional_curve[i + 1])
+            emotional_up_down[i] = "up";
+    }
+
+
+    for (let i = 0; i < emotion_data.num_of_character; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (!emotion_data.emotions[i].enables[j])
+                continue;
+
+            let before = emotion_data.emotions[i].emotion[j];
+            let after = emotion_data.emotions[i].emotion[j + 1];
+            let grad = 'nan';
+            let before_jp;
+            let after_jp;
+            let before_group = "negative";
+            let after_group = "negative";
+
+
+            let matched_basic = false;
+            //before側の日本語名を取ってくる
+            matched_basic = all_emotions.basics.hasOwnProperty(before);
+            if (matched_basic)
+                before_jp = all_emotions.basics[before].jp_name;
+            else
+                before_jp = all_emotions.dyads[before].jp_name;
+
+
+            //after側の日本語名を取ってくる
+            matched_basic = all_emotions.basics.hasOwnProperty(after);
+            if (matched_basic)
+                after_jp = all_emotions.basics[after].jp_name;
+            else
+                after_jp = all_emotions.dyads[after].jp_name;
+
+            for (let i in positive_emotions_relations) {
+                if (positive_emotions_relations[i][0] === before_jp)
+                    before_group = "positive";
+                if (positive_emotions_relations[i][0] === after_jp)
+                    after_group = "positive";
+            }
+
+
+            //そもそも見るべき表が違う場合（二分割のグループが違う）
+            if (before_group !== after_group) {
+
+                if (before_group == 'positive')
+                    grad = 'down';
+                else
+                    grad = 'up';
+            }
+            //同一グループ内での判定
+            else {
+                //ポジティブグループの時
+                if (before_group == 'positive') {
+                    for (let k = 0; k < positive_emotions_relations.length; k++) {
+                        if (positive_emotions_relations[k][0] === before_jp) {
+                            for (let l = 0; l < positive_emotions_relations.length; l++) {
+                                if (positive_emotions_relations[0][l] === after_jp) {
+                                    if (positive_emotions_relations[k][l] === 1) {
+                                        grad = 'down';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (let k = 0; k < positive_emotions_relations.length; k++) {
+                        if (positive_emotions_relations[0][k] === before_jp) {
+                            for (let l = 0; l < positive_emotions_relations.length; l++) {
+                                if (positive_emotions_relations[l][0] === after_jp) {
+                                    if (positive_emotions_relations[l][k] === 1) {
+                                        grad = 'up';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //ネガティブグループの時
+                else {
+                    for (let k = 0; k < negative_emotions_relations.length; k++) {
+                        if (negative_emotions_relations[k][0] === before_jp) {
+                            for (let l = 0; l < negative_emotions_relations.length; l++) {
+                                if (negative_emotions_relations[0][l] === after_jp) {
+                                    if (negative_emotions_relations[k][l] === 1) {
+                                        grad = 'up';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (let k = 0; k < negative_emotions_relations.length; k++) {
+                        if (negative_emotions_relations[0][k] === before_jp) {
+                            for (let l = 0; l < negative_emotions_relations.length; l++) {
+                                if (negative_emotions_relations[l][k] === after_jp) {
+                                    if (negative_emotions_relations[l][k] === 1) {
+                                        grad = 'down';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            const phase = ['起承における', '承転における', '転結における'];
+            // 結果表示
+            if (emotional_up_down[j] === 'up' && grad === 'down') {
+                $('#emotion_result').append(phase[j] + emotion_data.emotions[i].name + 'の感情が曲線と一致しません');
+                have_problem=true;
+            }
+            //console.log(phase[j]+emotion_data.emotions[i].name+'の感情が曲線と一致しません');
+            else if (emotional_up_down[j] === 'down' && grad === 'up') {
+                $('#emotion_result').append(phase[j] + emotion_data.emotions[i].name + 'の感情が曲線と一致しません');
+                have_problem=true;
+            }
+            //  console.log(phase[j]+emotion_data.emotions[i].name+'の感情が曲線と一致しません');
+            else
+                console.log('nan');
+        }
+
+    }
+
+    if(have_problem)
+        toastr.warning('診断結果をチェックしてみましょう');
+
+
+}
+
+function grad_emotion_value(before, after) {
+    if (before === after)
+        return 'nan';
+    else if (before < after)
+        return 'up';
+    else
+        return 'down';
+}
+
+
+function save_character_emotion() {
+    let $chara_name = $('.character_name');
+    let $chara_emo = $('.emotion_selector');
+    let $chara_emo_enables = $('.emotion_enable_check');
+    let $comment = $('.character_emotion_contents');
+    emotion_data.emotions = [];
+
+
+    for (let i = 0; i < emotion_data.num_of_character; i++) {
+        let emotion = [];
+        let enables = [];
+        let comments=[];
+
+        for (let j = 0; j < 4; j++) {
+            emotion.push($chara_emo[i * 4 + j].value);
+            comments.push($comment[i * 4 + j].value)
+        }
+        for (let j = 0; j < 3; j++) {
+            enables.push($chara_emo_enables[i * 3 + j].checked);
+        }
+
+
+        let temp = {
+            "ID": i,
+            "name": $chara_name[i].value,
+            "emotion": emotion,
+            "enables": enables,
+            "comments":comments
+        };
+        emotion_data.emotions.push(temp);
+    }
+    // console.log(emotion_data);
+}
+
+function getCsv(url) {
+    //CSVファイルを文字列で取得。
+    var txt = new XMLHttpRequest();
+    txt.open('get', url, false);
+    txt.send();
+
+    //改行ごとに配列化
+    var arr = txt.responseText.split('\n');
+
+    //1次元配列を2次元配列に変換
+    var res = [];
+    for (var i = 0; i < arr.length; i++) {
+        //空白行が出てきた時点で終了
+        if (arr[i] == '') break;
+
+        //","ごとに配列化
+        res[i] = arr[i].split(',');
+
+        for (var i2 = 0; i2 < res[i].length; i2++) {
+            //数字の場合は「"」を削除
+            if (res[i][i2].match(/\-?\d+(.\d+)?(e[\+\-]d+)?/)) {
+                res[i][i2] = parseFloat(res[i][i2].replace('"', ''));
             }
         }
-    });
+    }
+
+    return res;
 }
 
+function draw_wheel(emotion, canvas) {
+    canvas.removeClass('background-image');
+    let consist_of=['',''];
+    let mathed = false;
+    if(emotion!='none') {
+        let keys = Object.keys(all_emotions.basics);
+        for (let i = 0; i < keys.length; i++) {
+            if (emotion === keys[i]) {
+                mathed = true;
+                break;
+            }
+        }
+        //複合感情の時
+        if (!mathed) {
+            keys = Object.keys(all_emotions.dyads);
+            for (let i = 0; i < keys.length; i++) {
+                if (emotion === keys[i]) {
+                    consist_of = all_emotions.dyads[emotion].consist_of;
+                    break;
+                }
+            }
+        }
+    }
+
+    let ctx = canvas[0].getContext('2d');
+    ctx.clearRect(0, 0, 300, 300);
+
+    //該当する感情以外を透明化する処理
+    for (let name in all_emotions.basics) {
+        if (all_emotions.basics.hasOwnProperty(name)) {
+            if (mathed && name === emotion)
+                ctx.globalAlpha = 1.0;
+            else if (!mathed && (consist_of[0] === name || consist_of[1] === name))
+                ctx.globalAlpha = 1.0;
+            else
+                ctx.globalAlpha = 0.3;
+            //サークルを描く
+            ctx.fillStyle = all_emotions.basics[name].color;
+            ctx.beginPath();
+            ctx.arc(150, 150, 150, -Math.PI / 8 + Math.PI * (all_emotions.basics[name].angle - 1) / 4 - Math.PI / 2, Math.PI / 8 + Math.PI * (all_emotions.basics[name].angle - 1) / 4 - Math.PI / 2, false);
+            ctx.arc(150, 150, 50, Math.PI / 8 + Math.PI * (all_emotions.basics[name].angle - 1) / 4 - Math.PI / 2, -Math.PI / 8 + Math.PI * (all_emotions.basics[name].angle - 1) / 4 - Math.PI / 2, true);
+            ctx.closePath();
+            ctx.fill();
+            //サークル上のテキストの描画
+            let text_position = polar2rectangular(100, Math.PI * (all_emotions.basics[name].angle - 1) / 4 - Math.PI / 2);
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.font = "bold 16px sans-serif";
+            ctx.fillText(all_emotions.basics[name].jp_name, text_position[0] + 150, text_position[1] + 150);
+        }
+    }
+}

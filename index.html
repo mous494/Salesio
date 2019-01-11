@@ -189,25 +189,32 @@ Story
     <div id="t_2">
         <p>目指す物語のパターンを選んでください！</p>
         <select id="curve_select" size="1">
-            <option value="1">1ひたすらハッピー（上昇型）</option>
-            <option value="2">2ひたすらアンハッピー（下降型）</option>
-            <option value="3">3ハッピー→アンハッピー（上昇下降型）</option>
-            <option value="4">4アンハッピー→ハッピー（下降上昇型）</option>
-            <option value="5">5アンハッピー→ハッピー→アンハッピー（下降上昇下降型）</option>
-            <option value="6">6ハッピー→アンハッピー→ハッピー（上昇下降上昇型）</option>
+            <option value="1">1上昇型</option>
+            <option value="2">2下降型</option>
+            <option value="3">3上昇下降型</option>
+            <option value="4">4下降上昇型</option>
+            <option value="5">5下降上昇下降型</option>
+            <option value="6">6上昇下降上昇型</option>
             <!--<option value="7">7ジグザク1</option>-->
             <!--<option value="8">8ジグザグ2</option>-->
         </select>
         <!--<div id="plot_curve" class="plot_curve"></div>-->
-        <div style="height: 300px; position: relative">
-            <canvas id="chart_demo" height="300px"></canvas>
+        <div>
+            <canvas id="chart_demo" height="300px" width="1000px"></canvas>
+            <p>★感情外化診断結果★</p>
+            <p id="emotion_result"></p>
         </div>
         <button id="add_character">キャラ追加</button>
         <br>
 
         <div class="character_emotion_section">
             <div class="character_emotion">
-                <div>名前：<input type="text" class="character_name"/></div>
+                <div>名前：<input type="text" class="character_name"/><button class="delete_chara">キャラ削除</button> </div>
+                <div class="emotion_enables">この登場人物に着目するのは<br>
+                    起承<input type="checkbox" class="emotion_enable_check">
+                    承転<input type="checkbox" class="emotion_enable_check">
+                    転結<input type="checkbox" class="emotion_enable_check">
+                </div>
                 <div class="emotion_externalization_module introduction">
                     <p>起</p>
                     <div class="emotion_canvases" style="position: relative ">
@@ -219,15 +226,15 @@ Story
                         <select class="emotion_selector">
                         </select>
 
-                        悲しみ-喜び
-                        <div class="slider axis1"></div>
-                        嫌悪感-信頼
-                        <div class="slider axis2"></div>
-                        怒り-心配
-                        <div class="slider axis3"></div>
-                        予測-驚き
-                        <div class="slider axis4"></div>
-                        <div class="emotion_word"></div>
+                        <!--悲しみ-喜び-->
+                        <!--<div class="slider axis1"></div>-->
+                        <!--嫌悪感-信頼-->
+                        <!--<div class="slider axis2"></div>-->
+                        <!--怒り-心配-->
+                        <!--<div class="slider axis3"></div>-->
+                        <!--予測-驚き-->
+                        <!--<div class="slider axis4"></div>-->
+                        <div class="emotion_word">　　</div>
                     </div>
                     <!--<button class="slider_decide">感情決定！</button>-->
                     <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
@@ -243,15 +250,15 @@ Story
                     <div class="slider_wrapper">
                         <select class="emotion_selector">
                         </select>
-                        悲しみ-喜び
-                        <div class="slider axis1"></div>
-                        嫌悪感-信頼
-                        <div class="slider axis2"></div>
-                        怒り-心配
-                        <div class="slider axis3"></div>
-                        予測-驚き
-                        <div class="slider axis4"></div>
-                        <div class="emotion_word"></div>
+                        <!--悲しみ-喜び-->
+                        <!--<div class="slider axis1"></div>-->
+                        <!--嫌悪感-信頼-->
+                        <!--<div class="slider axis2"></div>-->
+                        <!--怒り-心配-->
+                        <!--<div class="slider axis3"></div>-->
+                        <!--予測-驚き-->
+                        <!--<div class="slider axis4"></div>-->
+                        <div class="emotion_word">　　</div>
                     </div>
                     <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
                     <!--<button class="slider_decide">感情決定！</button>-->
@@ -266,15 +273,15 @@ Story
                     <div class="slider_wrapper">
                         <select class="emotion_selector">
                         </select>
-                        悲しみ-喜び
-                        <div class="slider axis1"></div>
-                        嫌悪感-信頼
-                        <div class="slider axis2"></div>
-                        怒り-心配
-                        <div class="slider axis3"></div>
-                        予測-驚き
-                        <div class="slider axis4"></div>
-                        <div class="emotion_word"></div>
+                        <!--悲しみ-喜び-->
+                        <!--<div class="slider axis1"></div>-->
+                        <!--嫌悪感-信頼-->
+                        <!--<div class="slider axis2"></div>-->
+                        <!--怒り-心配-->
+                        <!--<div class="slider axis3"></div>-->
+                        <!--予測-驚き-->
+                        <!--<div class="slider axis4"></div>-->
+                        <div class="emotion_word">　　</div>
                     </div>
                     <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
                     <!--<button class="slider_decide">感情決定！</button>-->
@@ -289,15 +296,15 @@ Story
                     <div class="slider_wrapper">
                         <select class="emotion_selector">
                         </select>
-                        悲しみ-喜び
-                        <div class="slider axis1"></div>
-                        嫌悪感-信頼
-                        <div class="slider axis2"></div>
-                        怒り-心配
-                        <div class="slider axis3"></div>
-                        予測-驚き
-                        <div class="slider axis4"></div>
-                        <div class="emotion_word"></div>
+                        <!--悲しみ-喜び-->
+                        <!--<div class="slider axis1"></div>-->
+                        <!--嫌悪感-信頼-->
+                        <!--<div class="slider axis2"></div>-->
+                        <!--怒り-心配-->
+                        <!--<div class="slider axis3"></div>-->
+                        <!--予測-驚き-->
+                        <!--<div class="slider axis4"></div>-->
+                        <div class="emotion_word">　　</div>
                     </div>
                     <textarea name="character_emotion_contents" class="character_emotion_contents" rows="4"></textarea>
                     <!--<button class="slider_decide">感情決定！</button>-->
@@ -305,7 +312,7 @@ Story
                 <br>
             </div>
         </div>
-        <button id="emotion_save">感情保存</button>
+        <!--<button id="emotion_save">感情保存</button>-->
         <div style="clear: both"></div>
 
 
