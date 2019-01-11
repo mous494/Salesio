@@ -4,31 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43998bde-3766-4ba7-bb9b-b459e96342fa" name="Default" comment="いろいろ変更">
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/data.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/diff_table.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/emotion_list.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/emotion_list_random.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/emotion_list_up.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/emotions.json" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/emotions_and_consist_output.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/emotions_check_calc.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/experimental_data_formater.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/hedono_rank.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/old/計算用.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/old/計算用.xlsx" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/output.1.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/output.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/ranking_data_calc.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/test.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/tukey_smallp.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/turky.csv" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/turky.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/turky_calc.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/turky_result" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/無題3.sav" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/無題5.sav" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/work_of_emotions/計算用.xlsx" />
+    <list default="true" id="43998bde-3766-4ba7-bb9b-b459e96342fa" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
@@ -121,8 +97,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="2222" column="26" lean-forward="true" selection-start-line="2222" selection-start-column="26" selection-end-line="2222" selection-end-column="26" />
+            <state relative-caret-position="33285">
+              <caret line="2222" column="26" lean-forward="false" selection-start-line="2222" selection-start-column="26" selection-end-line="2222" selection-end-column="26" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -133,8 +109,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="474">
-              <caret line="370" column="7" lean-forward="true" selection-start-line="370" selection-start-column="7" selection-end-line="370" selection-end-column="7" />
+            <state relative-caret-position="195">
+              <caret line="13" column="36" lean-forward="true" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -246,7 +222,7 @@
     <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="width" value="1720" />
     <option name="height" value="1027" />
   </component>
@@ -267,11 +243,26 @@
     </entry>
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
       <showMembers ProjectPane="true" />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -287,7 +278,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -680,7 +671,8 @@
       <workItem from="1546955202286" duration="2297000" />
       <workItem from="1546960179624" duration="1234000" />
       <workItem from="1547128984677" duration="1201000" />
-      <workItem from="1547198049397" duration="929000" />
+      <workItem from="1547198049397" duration="987000" />
+      <workItem from="1547200324569" duration="83000" />
     </task>
     <task id="LOCAL-00001" summary="qa added">
       <created>1506392349282</created>
@@ -801,11 +793,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547198181189</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="年を変更しました">
+      <created>1547199501193</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1547199501193</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="565737000" />
+    <option name="totallyTimeSpent" value="565878000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -817,12 +816,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1720" height="1027" extended-state="0" />
+    <frame x="0" y="0" width="1680" height="1027" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20041537" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893288" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -833,9 +831,9 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0674974" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11513859" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11599512" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17222884" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17222884" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -846,6 +844,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32917964" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32744282" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -911,7 +910,8 @@
     <MESSAGE value="色々修正" />
     <MESSAGE value="服従のタイポ修正" />
     <MESSAGE value="いろいろ変更" />
-    <option name="LAST_COMMIT_MESSAGE" value="いろいろ変更" />
+    <MESSAGE value="年を変更しました" />
+    <option name="LAST_COMMIT_MESSAGE" value="年を変更しました" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -922,6 +922,24 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5550">
+          <caret line="370" column="7" lean-forward="true" selection-start-line="370" selection-start-column="7" selection-end-line="370" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1009,8 +1027,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="2222" column="26" lean-forward="true" selection-start-line="2222" selection-start-column="26" selection-end-line="2222" selection-end-column="26" />
+        <state relative-caret-position="33285">
+          <caret line="2222" column="26" lean-forward="false" selection-start-line="2222" selection-start-column="26" selection-end-line="2222" selection-end-column="26" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1019,8 +1037,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="370" column="7" lean-forward="true" selection-start-line="370" selection-start-column="7" selection-end-line="370" selection-end-column="7" />
+        <state relative-caret-position="195">
+          <caret line="13" column="36" lean-forward="true" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
           <folding />
         </state>
       </provider>
