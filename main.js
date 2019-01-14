@@ -503,17 +503,19 @@ $(document).ready(function () {
     }
 
 
-//コンボボックス、チェックボックス、コメントを変更したときのイベントリスナ
+//コンボボックス、チェックボックス、コメントを変更したとき、及び診断ボタンのイベントリスナ
     $('.emotion_selector').on('change', emotion_change_event);
     chara_emotion_clone = $('.character_emotion').clone();
     $('.emotion_enable_check').on('change',set_checkbox_change);
     $('.character_emotion_contents').on('change',set_comment_change);
+    $('.character_name').on('change',set_charaname_change);
     set_chara_add_button();
+    $('#emotion_feedback_gen').on('click',generate_emotion_feedback);
 
     // set_emotion_save_button();
 
 
-    //TODO:ここに物語曲線のインターフェイスの実装
+    //TODO:ここに感情曲線のインターフェイスの実装
 
 
     let ctx = document.getElementById('chart_demo').getContext('2d');
@@ -551,10 +553,12 @@ $(document).ready(function () {
         emotion_data.reader_curve = num - 1;
 
         chartdemo.update();
-        generate_emotion_feedback();
+        // generate_emotion_feedback();
         log_add('感情曲線を変更');
     });
 
+    //診断フェーズがバグらないようにするやつ
+    save_character_emotion();
 
     toastr.info('Welcome', 'ようこそ');
 });
@@ -1895,7 +1899,7 @@ function emotion_change_event() {
     $emotion_words_area.append(emotion_text);
 
     save_character_emotion();
-    generate_emotion_feedback();
+    // generate_emotion_feedback();
 
     //ここからログ関係の処理
     let chara_name = $(this).parents('.character_emotion').find('.character_name').val();
@@ -1925,8 +1929,8 @@ function set_chara_add_button() {
         $('.delete_chara').on('click',set_chara_remove_button);
         $('.character_emotion_contents').off('change');
         $('.character_emotion_contents').on('change',set_comment_change);
-
-
+        $('.character_name').off('change');
+        $('.character_name').on('change',set_charaname_change);
 
         emotion_data.num_of_character++;
         log_add('キャラクター追加');
@@ -1945,7 +1949,7 @@ function set_chara_remove_button() {
 
 function set_checkbox_change() {
     save_character_emotion();
-    generate_emotion_feedback();
+    // generate_emotion_feedback();
 
     //ここからログ関連の処理
     let chara_name = $(this).parents('.character_emotion').find('.character_name').val();
@@ -1958,6 +1962,14 @@ function set_comment_change() {
     let chara_name = $(this).parents('.character_emotion').find('.character_name').val();
     log_add(chara_name+'のコメントを変更しました');
 }
+
+function set_charaname_change() {
+    save_character_emotion();
+
+    let chara_name = $(this).val();
+    log_add(chara_name+'へキャラ名を変更しました');
+}
+
 
 // /**
 //  * 感情保存ボタンの挙動（後で然るべきUIでファイル保存に実装する必要あり）
@@ -2098,12 +2110,12 @@ function generate_emotion_feedback() {
             const phase = ['起承における', '承転における', '転結における'];
             // 結果表示
             if (emotional_up_down[j] === 'up' && grad === 'down') {
-                $('#emotion_result').append(phase[j] + emotion_data.emotions[i].name + 'の感情が曲線と一致しません');
+                $('#emotion_result').append(phase[j] + emotion_data.emotions[i].name + 'の感情が曲線と一致しません<br />');
                 have_problem=true;
             }
             //console.log(phase[j]+emotion_data.emotions[i].name+'の感情が曲線と一致しません');
             else if (emotional_up_down[j] === 'down' && grad === 'up') {
-                $('#emotion_result').append(phase[j] + emotion_data.emotions[i].name + 'の感情が曲線と一致しません');
+                $('#emotion_result').append(phase[j] + emotion_data.emotions[i].name + 'の感情が曲線と一致しません<br />');
                 have_problem=true;
             }
             //  console.log(phase[j]+emotion_data.emotions[i].name+'の感情が曲線と一致しません');
@@ -2115,8 +2127,10 @@ function generate_emotion_feedback() {
 
     if(have_problem)
         toastr.warning('診断結果をチェックしてみましょう');
+    else
+        toastr.info('感情曲線と感情に相違は見つかりませんでした');
 
-
+    log_add('感情診断ボタンをクリック');
 }
 
 function grad_emotion_value(before, after) {
