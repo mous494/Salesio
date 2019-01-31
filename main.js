@@ -1549,10 +1549,14 @@ function log_read() {
 
 function log_view() {
     var text = '';
+    let change_count=0;
     for (var a in LOG) {
         text += a + '\t' + LOG[a].comment + '\n';
+        if (LOG[a].comment.match(/更新/)) {
+            change_count++;
+        }
     }
-    text += '最終的なプロット全ノード数:' + LOG[LOG.length - 1].nodes.length + '\n全ストーリーノード数:' + LOG[LOG.length - 1].timeline.length;
+    text += '最終的なプロット全ノード数:' + LOG[LOG.length - 1].nodes.length + '\n全ストーリーノード数:' + LOG[LOG.length - 1].timeline.length + '\nノード更新回数:' + change_count;
     $('#log_view').val(text);
 
 }
@@ -1576,6 +1580,10 @@ function log_jump() {
 var g_step = 0;
 
 function log_move(step) {
+
+    let emo_list = Object.assign(all_emotions.basics,all_emotions.dyads);
+
+    let curve = ['上昇型','下降型','上昇下降','下降上昇','下降上昇下降','上昇下降上昇']
     if (step < 0) {
         toastr.info('これ以前はないです');
         g_step = 0;
@@ -1590,6 +1598,8 @@ function log_move(step) {
 
     var nodes = new vis.DataSet(LOG[step].nodes);
     var edges = new vis.DataSet(LOG[step].edges);
+    let emotion = LOG[step].emotion;
+    let emotion_json=JSON.stringify(emotion);
     var timeline_items = new vis.DataSet(LOG[step].timeline);
     data = {
         nodes: nodes,
@@ -1600,11 +1610,75 @@ function log_move(step) {
     story_timeline.destroy();
     story_timeline = new vis.Timeline(story_container, timeline_items, timeline_options);
     //set_timeline_interaction();
+    $('#log_emotion').val(emotion_json);
+
+
+    if(true){
+        let visible_string ='感情曲線：';
+
+        visible_string += curve[emotion.reader_curve]+'\n'+'キャラ数：'+emotion.num_of_character+'\n';
+        for(let i=0;i<emotion.emotions.length;i++){
+            visible_string += '名前：'+emotion.emotions[i].name+'\n';
+            visible_string += 'チェックボックス：'+emotion.emotions[i].enables[0]+emotion.emotions[i].enables[1]+emotion.emotions[i].enables[2]+'\n';
+            visible_string += '起感情：'+emo_list[emotion.emotions[i].emotion[0]].jp_name+':'+emotion.emotions[i].comments[0]+'\n';
+            visible_string += '承感情：'+emo_list[emotion.emotions[i].emotion[1]].jp_name+':'+emotion.emotions[i].comments[1]+'\n';
+            visible_string += '転感情：'+emo_list[emotion.emotions[i].emotion[2]].jp_name+':'+emotion.emotions[i].comments[2]+'\n';
+            visible_string += '結感情：'+emo_list[emotion.emotions[i].emotion[3]].jp_name+':'+emotion.emotions[i].comments[3]+'\n';
+        }
+        $('#log_emotion').val(visible_string);
+    }
+
     var text = '/' + (LOG.length - 1);
     $('#step').val(step + '');
     $('#current_operation').text(LOG[step].comment);
 
     $('#log_step').text(text);
+
+//    謎機能の追加
+    let node_list=[];
+    node_list.push(data.nodes.get('0'));
+    let scenario_text="";
+
+    while(node_list.length>0) {
+        let current_node = node_list.pop();
+
+        for(let i=0;i<current_node.level;i++)
+            scenario_text+='#'
+
+        scenario_text += ' '+current_node.label + '\n';
+        scenario_text += current_node.title + '\n';
+
+        let to_ids =[];
+
+        let edge_datas = data.edges.get({
+            filter: function (item) {
+                return (item.from == current_node.id)
+
+            }
+        });
+
+        for(let i=0;i<edge_datas.length;i++){
+            to_ids.push(edge_datas[i].to);
+        }
+
+
+        let children_nodes = data.nodes.get(to_ids);
+
+        if (children_nodes!=null) {
+            children_nodes.sort(function (a, b) {
+                if (a.x > b.x) return -1;
+                if (a.x < b.x) return 1;
+                return 0;
+            });
+        }
+
+        for (let i = 0; i < children_nodes.length; i++) {
+            node_list.push(children_nodes[i])
+        }
+    }
+
+    $('#plot_scenario').val(scenario_text);
+
 }
 
 //
