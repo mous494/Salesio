@@ -1635,6 +1635,8 @@ function log_move(step) {
     $('#log_step').text(text);
 
 //    謎機能の追加
+    plot_network.storePositions();
+
     let node_list=[];
     node_list.push(data.nodes.get('0'));
     let scenario_text="";
